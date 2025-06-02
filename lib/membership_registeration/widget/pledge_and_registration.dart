@@ -32,9 +32,9 @@ class PledgeAndRegistration extends StatelessWidget {
                   children: [
                     RadioListTile.adaptive(
                       contentPadding: const EdgeInsets.all(0),
-                    
+
                       title: const Text('نعم'),
-                    
+
                       value: true,
                       groupValue: cubit.groupValue,
                       onChanged: (value) {
@@ -44,7 +44,7 @@ class PledgeAndRegistration extends StatelessWidget {
                     RadioListTile.adaptive(
                       contentPadding: const EdgeInsets.all(0),
                       title: const Text('لا'),
-                    
+
                       value: false,
                       groupValue: cubit.groupValue,
                       onChanged: (value) {
