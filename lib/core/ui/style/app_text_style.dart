@@ -16,4 +16,12 @@ class AppTextStyle {
     fontSize: 14.sp,
     fontWeight: AppFontWeight.bold,
   );
+  static TextStyle medium16 = TextStyle(
+    fontSize: 16.sp,
+    fontWeight: AppFontWeight.medium,
+  );
+  static TextStyle regular16 = TextStyle(
+    fontSize: 16.sp,
+    fontWeight: AppFontWeight.regular,
+  );
 }
