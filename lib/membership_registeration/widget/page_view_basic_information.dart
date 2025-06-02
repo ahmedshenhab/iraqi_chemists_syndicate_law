@@ -1,9 +1,14 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:iraqi_chemists_syndicate_law/core/reusable/custom_elevated_button.dart';
 import 'package:iraqi_chemists_syndicate_law/core/reusable/custom_text_form_field.dart';
 import 'package:iraqi_chemists_syndicate_law/core/ui/style/app_color.dart';
+import 'package:iraqi_chemists_syndicate_law/core/ui/style/app_text_style.dart';
 import 'package:iraqi_chemists_syndicate_law/membership_registeration/cubit/membership_registeration_cubit_cubit.dart';
 
 class PageViewBasicInformation extends StatefulWidget {
@@ -21,6 +26,7 @@ class _PageViewBasicInformationState extends State<PageViewBasicInformation> {
       TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
+  File? file;
 
   @override
   Widget build(BuildContext context) {
@@ -85,10 +91,39 @@ class _PageViewBasicInformationState extends State<PageViewBasicInformation> {
                 border: BoxBorder.all(color: AppColor.primary),
                 borderRadius: BorderRadius.circular(24.r),
               ),
-              child: Image.asset(
-                'assets/image/png/empty_photo.png',
-                width: 80.w,
-                height: 80.h,
+              child: GestureDetector(
+                onTap: () async {
+                  final ImagePicker picker = ImagePicker();
+
+                  final XFile? image = await picker.pickImage(
+                    source: ImageSource.gallery,
+                  );
+
+                  file = File(image!.path);
+
+                  log('sssss');
+                },
+                child: file == null
+                    ? CustomImage(
+                        image: Image.asset(
+                          'assets/image/png/empty_photo.png',
+                          width: 80.w,
+                          height: 80.h,
+                        ),
+                        text: 'تحميل صورة شخصية',
+                      )
+                    : CustomImage(
+                        image: CircleAvatar(
+                          backgroundColor: AppColor.jetStream,
+                          radius: 40.r,
+                          child: CircleAvatar(
+                            radius: 36.r,
+
+                            backgroundImage: FileImage(file!),
+                          ),
+                        ),
+                        text: 'تغيير الصورة الشخصية',
+                      ),
               ),
             ),
             SizedBox(height: 15.h),
@@ -104,6 +139,29 @@ class _PageViewBasicInformationState extends State<PageViewBasicInformation> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class CustomImage extends StatelessWidget {
+  const CustomImage({super.key, required this.image, required this.text});
+  final Widget image;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        image,
+        Text(
+          text,
+          style: AppTextStyle.regular16.copyWith(
+            color: AppColor.primary,
+            decoration: TextDecoration.underline,
+          ),
+        ),
+      ],
     );
   }
 }

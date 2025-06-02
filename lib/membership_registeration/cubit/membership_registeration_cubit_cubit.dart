@@ -7,21 +7,21 @@ class MembershipRegisterationCubit
     extends Cubit<MembershipRegisterationCubitState> {
   MembershipRegisterationCubit()
     : super(MembershipRegisterationCubitInitial()) {
-    pageController = PageController(initialPage: 4);
-
+    pageController = PageController(initialPage: 0,);
   }
 
-
-   bool? groupValue ;
+  bool? groupValue;
 
   late PageController pageController;
   static MembershipRegisterationCubit get(context) => BlocProvider.of(context);
   //   duration: Duration(milliseconds: 300),
   // curve: Curves.easeInOut,
-   Future<void> nextmove()async {
-      await pageController.nextPage(duration: const Duration(seconds: 1), curve: Curves.fastOutSlowIn);
+  Future<void> nextmove() async {
+    await pageController.nextPage(
+      duration: const Duration(seconds: 1),
+      curve: Curves.fastOutSlowIn,
+    );
   }
-  
 
   @override
   Future<void> close() {

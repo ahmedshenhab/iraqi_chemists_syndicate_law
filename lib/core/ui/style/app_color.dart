@@ -9,9 +9,12 @@ class AppColor {
   static const Color primary = Color(0xFF116845);
     static const Color steelBlue = Color(0xFF58AAC0);
   static const Color red =  Colors.red;
+  static const Color redOrange = Color(0xFFE83A3A);
   
   static const Color jet = Color(0xFF313131);
   static const Color grey = Color(0xFF9E9E9E);
   static const Color slateGrey = Color(0xFF6B7280);
   static const Color charcoalGray = Color(0xFF4B5563);
+
+  static const Color jetStream = Color(0xFFB5D0C5);
 }
