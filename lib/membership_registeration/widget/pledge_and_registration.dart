@@ -28,31 +28,23 @@ class PledgeAndRegistration extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text('هل أنت موظف؟', style: AppTextStyle.medium20),
-                Row(
-                  children: [
-                    RadioListTile.adaptive(
-                      contentPadding: const EdgeInsets.all(0),
-
-                      title: const Text('نعم'),
-
-                      value: true,
-                      groupValue: cubit.groupValue,
-                      onChanged: (value) {
-                        cubit.groupValue = value;
-                      },
-                    ),
-                    RadioListTile.adaptive(
-                      contentPadding: const EdgeInsets.all(0),
-                      title: const Text('لا'),
-
-                      value: false,
-                      groupValue: cubit.groupValue,
-                      onChanged: (value) {
-                        cubit.groupValue = value;
-                      },
-                    ),
-                  ],
+                Radio.adaptive(
+                  value: true,
+                  groupValue: cubit.groupValue,
+                  onChanged: (value) {
+                    cubit.groupValue = value;
+                  },
                 ),
+                const Text('نعم'),
+
+                Radio.adaptive(
+                  value: false,
+                  groupValue: cubit.groupValue,
+                  onChanged: (value) {
+                    cubit.groupValue = value;
+                  },
+                ),
+                const Text('لا'),
               ],
             ),
           ],
