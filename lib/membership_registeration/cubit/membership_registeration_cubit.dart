@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-part 'membership_registeration_cubit_state.dart';
+import 'package:iraqi_chemists_syndicate_law/membership_registeration/cubit/membership_registeration_cubit_state.dart';
 
 class MembershipRegisterationCubit
     extends Cubit<MembershipRegisterationCubitState> {
   MembershipRegisterationCubit()
     : super(MembershipRegisterationCubitInitial()) {
-    pageController = PageController(initialPage: 0,);
+    pageController = PageController(initialPage: 1);
   }
 
   bool? groupValue;
@@ -18,7 +17,7 @@ class MembershipRegisterationCubit
   // curve: Curves.easeInOut,
   Future<void> nextmove() async {
     await pageController.nextPage(
-      duration: const Duration(seconds: 1),
+      duration: const Duration(seconds: 3),
       curve: Curves.fastOutSlowIn,
     );
   }

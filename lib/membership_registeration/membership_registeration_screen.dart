@@ -6,22 +6,20 @@ class MembershipRegisterationScreen extends StatelessWidget {
   const MembershipRegisterationScreen({super.key});
 
   static const String routeName = '/membership_registeration';
-  
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            Image.asset(
-              'assets/image/png/logo.png',
-              width: 80.w,
-              height: 102.h,
-            ),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
+          child: Column(
+            children: [
+             
 
-            const PageViews(),
-          ],
+              const Expanded(child: PageViews()),
+            ],
+          ),
         ),
       ),
     );
