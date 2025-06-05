@@ -19,36 +19,79 @@
             <!-- Theme during loading -->
             <meta-data
                 android:name="io.flutter.embedding.android.NormalTheme"
-                android:resource="@style/NormalTheme"
-                />
+                android:resource="@style/NormalTheme" />
 
-            <!-- Deep link intent filter -->
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
-                <!-- مثال: تحديث scheme وhost ليطابقوا نطاق Dynamic Links -->
-                <data android:scheme="https" android:host="yourapp.page.link" />
+            <!-- Intent filter للروابط العميقة الخاصة باستعادة كلمة المرور (https) -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="https"
+                    android:host="chemistssyndicate.runasp.net"
+                    android:pathPrefix="/reset-password" />
             </intent-filter>
 
-            <!-- Main launcher intent -->
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+            <!-- Intent filter للروابط العميقة الخاصة بتأكيد البريد الإلكتروني (https) -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="https"
+                    android:host="chemistssyndicate.runasp.net"
+                    android:pathPrefix="/confirm-email" />
             </intent-filter>
+
+            <!-- Intent filter لاستقبال كل الروابط من الدومين (https) -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="https"
+                    android:host="chemistssyndicate.runasp.net" />
+            </intent-filter>
+
+            <!-- Intent filter للروابط العميقة الخاصة بـ custom scheme pharmaapp://reset-password -->
+            <intent-filter android:autoVerify="false">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="pharmaapp"
+                    android:pathPrefix="/reset-password" />
+            </intent-filter>
+
+            <!-- Intent filter للروابط العميقة الخاصة بـ custom scheme pharmaapp://confirm-email -->
+            <intent-filter android:autoVerify="false">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="pharmaapp"
+                    android:pathPrefix="/confirm-email" />
+            </intent-filter>
+
+            <!-- Intent filter لتشغيل التطبيق كـ Launcher -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
         </activity>
 
-        <!-- Flutter plugin registration -->
+        <!-- تسجيل Flutter embedding version 2 -->
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
 
-    <!-- Needed for process text plugins -->
+    <!-- سماح لعمليات التعامل مع نصوص (Text processing plugins) -->
     <queries>
         <intent>
-            <action android:name="android.intent.action.PROCESS_TEXT"/>
-            <data android:mimeType="text/plain"/>
+            <action android:name="android.intent.action.PROCESS_TEXT" />
+            <data android:mimeType="text/plain" />
         </intent>
     </queries>
 </manifest>

@@ -18,12 +18,23 @@ class _EmailConfirmationPageState extends State<EmailConfirmationPage> {
   final _tokenController = TextEditingController();
 
   bool _isLoading = false;
+  bool _autoConfirmStarted = false;
 
   @override
   void initState() {
     super.initState();
     if (widget.email != null) _emailController.text = widget.email!;
     if (widget.token != null) _tokenController.text = widget.token!;
+
+    // نفذ التأكيد تلقائيًا إذا البريد والرمز موجودين ولم يبدأ بعد
+    if (widget.email != null && widget.token != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!_autoConfirmStarted) {
+          _autoConfirmStarted = true;
+          confirmEmail();
+        }
+      });
+    }
   }
 
   @override
@@ -135,6 +146,8 @@ class _EmailConfirmationPageState extends State<EmailConfirmationPage> {
 
   @override
   Widget build(BuildContext context) {
+    final hasAutoValues = widget.email != null && widget.token != null;
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -150,15 +163,20 @@ class _EmailConfirmationPageState extends State<EmailConfirmationPage> {
               children: [
                 SizedBox(height: 20),
                 Text(
-                  'يرجى إدخال البريد الإلكتروني ورمز التأكيد الذي وصلك عبر البريد.',
+                  hasAutoValues
+                      ? 'جارٍ تأكيد بريدك الإلكتروني...'
+                      : 'يرجى إدخال البريد الإلكتروني ورمز التأكيد الذي وصلك عبر البريد.',
                   style: TextStyle(fontSize: 16),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 20),
+
+                // البريد الإلكتروني
                 TextFormField(
                   controller: _emailController,
                   decoration: buildInputDecoration('البريد الإلكتروني'),
                   keyboardType: TextInputType.emailAddress,
+                  readOnly: widget.email != null,
                   validator: (value) {
                     if (value == null || value.isEmpty) return 'الرجاء إدخال البريد الإلكتروني';
                     if (!RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) return 'البريد الإلكتروني غير صالح';
@@ -166,31 +184,36 @@ class _EmailConfirmationPageState extends State<EmailConfirmationPage> {
                   },
                 ),
                 SizedBox(height: 15),
+
+                // رمز التأكيد
                 TextFormField(
                   controller: _tokenController,
                   decoration: buildInputDecoration('رمز التأكيد'),
+                  readOnly: widget.token != null,
                   validator: (value) {
                     if (value == null || value.isEmpty) return 'الرجاء إدخال رمز التأكيد';
                     return null;
                   },
                 ),
+
                 SizedBox(height: 25),
-                SizedBox(
-                  width: double.infinity,
-                  height: 50,
-                  child: ElevatedButton(
-                    onPressed: _isLoading ? null : confirmEmail,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green.shade900,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                if (!hasAutoValues) // إذا القيم وصلت من الديب لينك، لا نحتاج زر
+                  SizedBox(
+                    width: double.infinity,
+                    height: 50,
+                    child: ElevatedButton(
+                      onPressed: _isLoading ? null : confirmEmail,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green.shade900,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
                       ),
+                      child: _isLoading
+                          ? CircularProgressIndicator(color: Colors.white)
+                          : Text('تأكيد البريد الإلكتروني', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                     ),
-                    child: _isLoading
-                        ? CircularProgressIndicator(color: Colors.white)
-                        : Text('تأكيد البريد الإلكتروني', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   ),
-                ),
               ],
             ),
           ),
