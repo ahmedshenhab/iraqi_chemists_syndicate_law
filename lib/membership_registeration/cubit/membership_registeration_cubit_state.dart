@@ -1,4 +1,6 @@
-part of 'membership_registeration_cubit_cubit.dart';
+
+
+import 'package:flutter/material.dart';
 
 @immutable
 sealed class MembershipRegisterationCubitState {}

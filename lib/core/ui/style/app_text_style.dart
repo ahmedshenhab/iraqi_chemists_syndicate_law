@@ -12,6 +12,10 @@ class AppTextStyle {
     fontSize: 20.sp,
     fontWeight: AppFontWeight.medium,
   );
+  static TextStyle light8 = TextStyle(
+    fontSize: 8.9.sp,
+    fontWeight: AppFontWeight.light,
+  );
   static TextStyle bold14 = TextStyle(
     fontSize: 14.sp,
     fontWeight: AppFontWeight.bold,

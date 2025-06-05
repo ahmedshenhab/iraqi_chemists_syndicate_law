@@ -1,12 +1,14 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:iraqi_chemists_syndicate_law/core/reusable/custom_drop_down_form_field.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iraqi_chemists_syndicate_law/core/reusable/custom_elevated_button.dart';
-import 'package:iraqi_chemists_syndicate_law/core/reusable/custom_text_form_field.dart';
 import 'package:iraqi_chemists_syndicate_law/core/ui/style/app_color.dart';
 import 'package:iraqi_chemists_syndicate_law/core/ui/style/app_text_style.dart';
-import 'package:iraqi_chemists_syndicate_law/membership_registeration/cubit/membership_registeration_cubit_cubit.dart';
+import 'package:iraqi_chemists_syndicate_law/membership_registeration/cubit/membership_registeration_cubit.dart';
+import 'package:iraqi_chemists_syndicate_law/membership_registeration/widget/page_view_basic_information.dart';
 
 class PageViewIdentityInformation extends StatefulWidget {
   const PageViewIdentityInformation({super.key});
@@ -20,80 +22,124 @@ class _PageViewIdentityInformationState
     extends State<PageViewIdentityInformation> {
   final TextEditingController registrationNumber = TextEditingController();
   final TextEditingController registrationDate = TextEditingController();
+  File? file;
 
   @override
   Widget build(BuildContext context) {
     final cubit = MembershipRegisterationCubit.get(context);
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 12.w),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            SvgPicture.asset(
-              'assets/image/svg/identity information.svg',
-              width: MediaQuery.of(context).size.width * 0.65,
-            ),
-            SizedBox(height: 15.h),
-            CustomTextFormField(
-              labelText: 'رقم التسجيل',
-              controller: registrationNumber,
-              validator: (p0) {},
-            ),
-            SizedBox(height: 15.h),
 
-            CustomTextFormField(
-              labelText: 'تاريخ التسجيل',
-              controller: registrationDate,
-              validator: (p0) {
-                return null;
-              },
-              suffixIconButton: Icon(
-                Icons.calendar_month,
-                color: AppColor.grey,
-                size: 15.h,
+    return Column(
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
+            padding: EdgeInsets.only(bottom: 24.h),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 12.w),
+              child: Column(
+                children: [
+                  SizedBox(height: 12.h),
+                  Image.asset(
+                    'assets/image/png/logo.png',
+                    width: 80.w,
+                    height: 102.h,
+                  ),
+                  SizedBox(height: 24.h),
+                  Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: SvgPicture.asset(
+                      'assets/image/svg/identity information.svg',
+                      height: 24.h,
+                    ),
+                  ),
+                  SizedBox(height: 198.h),
+                  Container(
+                    alignment: Alignment.center,
+                    width: double.infinity,
+                    height: 202.h,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: AppColor.primary),
+                      borderRadius: BorderRadius.circular(24.r),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: () async {
+                            final result = await FilePicker.platform.pickFiles(
+                              type: FileType.custom,
+
+                              allowedExtensions: ['pdf', 'png', 'jpg', 'jpeg'],
+                            );
+
+                            if (result != null && result.files.isNotEmpty) {
+                              setState(() {
+                                file = File(result.files.first.path!);
+                              });
+                            }
+                          },
+                          child: file == null
+                              ? CustomImage(
+                                  image: Image.asset(
+                                    'assets/image/png/personalcard.png',
+                                    width: 80.w,
+                                    height: 80.h,
+                                  ),
+                                  text: 'تحميل صورة الهوية الوطنية',
+                                )
+                              : Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    file!.path.endsWith('.pdf')
+                                        ? Icon(
+                                            Icons.picture_as_pdf,
+                                            size: 40.w,
+                                            color: Colors.red,
+                                          )
+                                        : Image.file(
+                                            file!,
+                                            width: 80.w,
+                                            height: 80.h,
+                                            fit: BoxFit.cover,
+                                          ),
+                                    SizedBox(height: 8.h),
+                                    Text(
+                                      file!.path.split('/').last,
+                                      style: AppTextStyle.bold14.copyWith(
+                                        color: AppColor.primary,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
+                        ),
+                        SizedBox(height: 13.h),
+                        Text(
+                          '.PDF, .PNG & .JPEG الصيغ المسموح بها',
+                          style: AppTextStyle.light8.copyWith(
+                            color: AppColor.grey,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
-            SizedBox(height: 15.h),
-
-            CustomDropDownFormField(
-              hintText: 'المرتبه',
-              items: ['sss', 'sssss']
-                  .map(
-                    (e) => DropdownMenuItem(
-                      value: e,
-                      child: Text(e, style: AppTextStyle.regular14),
-                    ),
-                  )
-                  .toList(),
-              onChanged: (value) {},
-              icon: const Icon(Icons.arrow_drop_down, color: AppColor.grey),
-            ),
-            SizedBox(height: 15.h),
-            CustomDropDownFormField(
-              hintText: 'المرتبه المراد استحصالها',
-              items: ['sss', 'sssss']
-                  .map(
-                    (e) => DropdownMenuItem(
-                      value: e,
-                      child: Text(e, style: AppTextStyle.regular14),
-                    ),
-                  )
-                  .toList(),
-              onChanged: (value) {},
-              icon: const Icon(Icons.arrow_drop_down, color: AppColor.grey),
-            ),
-            SizedBox(height: 15.h),
-
-            CustomElevatedButton(
-              text: 'التالي',
-              onPressed: () async {
-                await cubit.nextmove();
-              },
-              fixedHeight: 40.h,
-            ),
-          ],
+          ),
         ),
-      ),
+        Container(
+          width: double.infinity,
+          color: Colors.white,
+          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
+          child: CustomElevatedButton(
+            text: 'التالي',
+            onPressed: () async {
+              await cubit.nextmove();
+            },
+            fixedHeight: 40.h,
+          ),
+        ),
+      ],
     );
   }
 }
