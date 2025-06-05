@@ -15,9 +15,8 @@ class PageViews extends StatelessWidget {
     final cubit = MembershipRegisterationCubit.get(context);
 
     return PageView(
-      
       controller: cubit.pageController,
-    
+
       // physics: const NeverScrollableScrollPhysics(),
       children: const [
         // basic information
