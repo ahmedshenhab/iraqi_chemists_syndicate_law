@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iraqi_chemists_syndicate_law/core/ui/style/app_color.dart';
 import 'package:iraqi_chemists_syndicate_law/core/ui/style/app_text_style.dart';
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:iraqi_chemists_syndicate_law/auth/login/login_screen.dart';
-import 'package:iraqi_chemists_syndicate_law/membership_registeration/cubit/membership_registeration_cubit.dart';
-import 'package:iraqi_chemists_syndicate_law/membership_registeration/membership_registeration_screen.dart';
+import 'package:iraqi_chemists_syndicate_law/module/auth/login/login_screen.dart';
+import 'package:iraqi_chemists_syndicate_law/module/membership_registeration/cubit/membership_registeration_cubit.dart';
+import 'package:iraqi_chemists_syndicate_law/module/membership_registeration/membership_registeration_screen.dart';
 
 class AppRouter {
   static Route? onGenerateRoute(RouteSettings setting) {

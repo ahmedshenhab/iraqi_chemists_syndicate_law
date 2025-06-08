@@ -4,7 +4,7 @@ import 'package:iraqi_chemists_syndicate_law/core/ui/style/app_color.dart';
 class AppLightTheme {
   static ThemeData lighTheme = ThemeData(
     scaffoldBackgroundColor: AppColor.white,
-    fontFamily: "Ubuntu",
+    fontFamily: "Inter",
     brightness: Brightness.light,
     appBarTheme: const AppBarTheme(
       titleSpacing: 0,
@@ -13,7 +13,10 @@ class AppLightTheme {
     ),
     colorScheme: ColorScheme.fromSeed(seedColor: AppColor.primary),
 
-    textTheme: ThemeData.light().textTheme.apply(bodyColor: AppColor.jet),
+    textTheme: ThemeData.light().textTheme.apply(
+      bodyColor: AppColor.jet,
+      fontFamily: 'Inter',
+    ),
     iconButtonTheme: IconButtonThemeData(
       style: IconButton.styleFrom(
         focusColor: AppColor.transparent,

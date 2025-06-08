@@ -4,11 +4,16 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iraqi_chemists_syndicate_law/core/reusable/custom_elevated_button.dart';
 import 'package:iraqi_chemists_syndicate_law/core/ui/style/app_color.dart';
 import 'package:iraqi_chemists_syndicate_law/core/ui/style/app_text_style.dart';
-import 'package:iraqi_chemists_syndicate_law/membership_registeration/cubit/membership_registeration_cubit.dart';
+import 'package:iraqi_chemists_syndicate_law/module/membership_registeration/cubit/membership_registeration_cubit.dart';
 
-class PledgeAndRegistration extends StatelessWidget {
+class PledgeAndRegistration extends StatefulWidget {
   const PledgeAndRegistration({super.key});
 
+  @override
+  State<PledgeAndRegistration> createState() => _PledgeAndRegistrationState();
+}
+
+class _PledgeAndRegistrationState extends State<PledgeAndRegistration> {
   @override
   Widget build(BuildContext context) {
     final cubit = MembershipRegisterationCubit.get(context);
@@ -34,10 +39,10 @@ class PledgeAndRegistration extends StatelessWidget {
                     height: 24.h,
                   ),
                 ),
-                SizedBox(height: 48.h),
+                SizedBox(height: 60.h),
                 SvgPicture.asset(
-                  'assets/image/svg/pledge_seconde.svg',
-                  height: 230.h,
+                  'assets/image/svg/pledge_second.svg',
+                  height: 194.h,
                 ),
                 SizedBox(height: 40.h),
                 Row(
@@ -52,19 +57,23 @@ class PledgeAndRegistration extends StatelessWidget {
                       child: Row(
                         children: [
                           Radio.adaptive(
+                            activeColor: AppColor.aquaGreen,
                             value: true,
                             groupValue: cubit.groupValue,
                             onChanged: (value) {
                               cubit.groupValue = value;
+                              setState(() {});
                             },
                           ),
                           const Text('نعم'),
                           SizedBox(width: 16.w),
                           Radio.adaptive(
+                            activeColor: AppColor.aquaGreen,
                             value: false,
                             groupValue: cubit.groupValue,
                             onChanged: (value) {
                               cubit.groupValue = value;
+                              setState(() {});
                             },
                           ),
                           const Text('لا'),
@@ -147,7 +156,7 @@ class CustomCheckBox extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Checkbox.adaptive(value: value, onChanged: onChanged),
+        Checkbox(value: value, onChanged: onChanged),
         widget,
       ],
     );
