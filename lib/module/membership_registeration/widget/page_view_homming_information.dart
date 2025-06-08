@@ -3,25 +3,27 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:iraqi_chemists_syndicate_law/core/reusable/custom_drop_down_form_field.dart';
 import 'package:iraqi_chemists_syndicate_law/core/reusable/custom_elevated_button.dart';
+import 'package:iraqi_chemists_syndicate_law/core/reusable/custom_text_form_field.dart';
 import 'package:iraqi_chemists_syndicate_law/core/ui/style/app_color.dart';
 import 'package:iraqi_chemists_syndicate_law/core/ui/style/app_text_style.dart';
-import 'package:iraqi_chemists_syndicate_law/membership_registeration/cubit/membership_registeration_cubit.dart';
-import 'package:iraqi_chemists_syndicate_law/membership_registeration/widget/page_view_basic_information.dart';
+import 'package:iraqi_chemists_syndicate_law/module/membership_registeration/cubit/membership_registeration_cubit.dart';
+import 'package:iraqi_chemists_syndicate_law/module/membership_registeration/widget/custom_image_and_discription.dart';
 
-class PageViewIdentityInformation extends StatefulWidget {
-  const PageViewIdentityInformation({super.key});
+class PageViewHommingInformation extends StatefulWidget {
+  const PageViewHommingInformation({super.key});
 
   @override
-  State<PageViewIdentityInformation> createState() =>
-      _PageViewIdentityInformationState();
+  State<PageViewHommingInformation> createState() =>
+      _PageViewHommingInformationState();
 }
 
-class _PageViewIdentityInformationState
-    extends State<PageViewIdentityInformation> {
-  final TextEditingController registrationNumber = TextEditingController();
-  final TextEditingController registrationDate = TextEditingController();
+class _PageViewHommingInformationState
+    extends State<PageViewHommingInformation> {
+  final zokakController = TextEditingController();
+  final homeController = TextEditingController();
   File? file;
 
   @override
@@ -47,15 +49,80 @@ class _PageViewIdentityInformationState
                   Align(
                     alignment: AlignmentDirectional.centerStart,
                     child: SvgPicture.asset(
-                      'assets/image/svg/identity information.svg',
+                      'assets/image/svg/homming information.svg',
                       height: 24.h,
                     ),
                   ),
-                  SizedBox(height: 198.h),
+                  SizedBox(height: 32.h),
+                  CustomDropDownFormField(
+                    hintText: 'المحافظه',
+                    items: ['sss', 'sssss']
+                        .map(
+                          (e) => DropdownMenuItem(
+                            value: e,
+                            child: Text(e, style: AppTextStyle.regular14),
+                          ),
+                        )
+                        .toList(),
+                    onChanged: (value) {},
+                    icon: const Icon(
+                      Icons.arrow_drop_down,
+                      color: AppColor.grey,
+                    ),
+                  ),
+                  SizedBox(height: 32.h),
+                  CustomDropDownFormField(
+                    hintText: 'المدينه',
+                    items: ['sss', 'sssss']
+                        .map(
+                          (e) => DropdownMenuItem(
+                            value: e,
+                            child: Text(e, style: AppTextStyle.regular14),
+                          ),
+                        )
+                        .toList(),
+                    onChanged: (value) {},
+                    icon: const Icon(
+                      Icons.arrow_drop_down,
+                      color: AppColor.grey,
+                    ),
+                  ),
+                  SizedBox(height: 32.h),
+                  CustomDropDownFormField(
+                    hintText: 'محله',
+                    items: ['sss', 'sssss']
+                        .map(
+                          (e) => DropdownMenuItem(
+                            value: e,
+                            child: Text(e, style: AppTextStyle.regular14),
+                          ),
+                        )
+                        .toList(),
+                    onChanged: (value) {},
+                    icon: const Icon(
+                      Icons.arrow_drop_down,
+                      color: AppColor.grey,
+                    ),
+                  ),
+                  SizedBox(height: 32.h),
+
+                  CustomTextFormField(
+                    labelText: 'زقاق',
+                    controller: zokakController,
+                    validator: (p0) {},
+                  ),
+                  SizedBox(height: 32.h),
+
+                  CustomTextFormField(
+                    labelText: 'دار',
+                    controller: homeController,
+                    validator: (p0) {},
+                  ),
+                  SizedBox(height: 32.h),
                   Container(
                     alignment: Alignment.center,
                     width: double.infinity,
-                    height: 202.h,
+                    height: 204.h,
                     decoration: BoxDecoration(
                       border: Border.all(color: AppColor.primary),
                       borderRadius: BorderRadius.circular(24.r),
@@ -78,13 +145,13 @@ class _PageViewIdentityInformationState
                             }
                           },
                           child: file == null
-                              ? CustomImage(
-                                  image: Image.asset(
-                                    'assets/image/png/personalcard.png',
-                                    width: 80.w,
-                                    height: 80.h,
+                              ? CustomImageAndDiscription(
+                                  image: SvgPicture.asset(
+                                    'assets/image/svg/icon_download_image.svg',
+                                    width: 90.w,
+                                    height: 90.h,
                                   ),
-                                  text: 'تحميل صورة الهوية الوطنية',
+                                  text: 'تحميل صورة بطاقة السكن',
                                 )
                               : Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -93,7 +160,7 @@ class _PageViewIdentityInformationState
                                         ? Icon(
                                             Icons.picture_as_pdf,
                                             size: 40.w,
-                                            color: Colors.red,
+                                            color: AppColor.red,
                                           )
                                         : Image.file(
                                             file!,
@@ -133,8 +200,8 @@ class _PageViewIdentityInformationState
           padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
           child: CustomElevatedButton(
             text: 'التالي',
-            onPressed: () async {
-              await cubit.nextmove();
+            onPressed: () {
+              cubit.nextmove();
             },
             fixedHeight: 40.h,
           ),

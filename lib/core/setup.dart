@@ -1,8 +1,8 @@
 
-import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iraqi_chemists_syndicate_law/core/di/di.dart';
 import 'package:iraqi_chemists_syndicate_law/core/observer/observer.dart';
@@ -23,6 +23,7 @@ Future<void> setupApp() async {
   // );
   
 
+ 
   await Future.wait([
     CachHelper.init,
     ScreenUtil.ensureScreenSize(),

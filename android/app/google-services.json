@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "787865515998",
+    "project_id": "iraqi-chemists",
+    "storage_bucket": "iraqi-chemists.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:787865515998:android:1ffd853878a4c9435b8f4f",
+        "android_client_info": {
+          "package_name": "com.example.iraqi_chemists_syndicate_law"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwwBgNrbYVJz6CAhr-8yY26LWDg0U5wqs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

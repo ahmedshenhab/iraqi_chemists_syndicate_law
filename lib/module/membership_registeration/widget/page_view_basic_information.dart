@@ -7,8 +7,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:iraqi_chemists_syndicate_law/core/reusable/custom_elevated_button.dart';
 import 'package:iraqi_chemists_syndicate_law/core/reusable/custom_text_form_field.dart';
 import 'package:iraqi_chemists_syndicate_law/core/ui/style/app_color.dart';
-import 'package:iraqi_chemists_syndicate_law/core/ui/style/app_text_style.dart';
-import 'package:iraqi_chemists_syndicate_law/membership_registeration/cubit/membership_registeration_cubit.dart';
+import 'package:iraqi_chemists_syndicate_law/module/membership_registeration/cubit/membership_registeration_cubit.dart';
+import 'package:iraqi_chemists_syndicate_law/module/membership_registeration/widget/custom_image_and_discription.dart';
 
 class PageViewBasicInformation extends StatefulWidget {
   const PageViewBasicInformation({super.key});
@@ -90,6 +90,7 @@ class _PageViewBasicInformationState extends State<PageViewBasicInformation> {
                     size: 15.h,
                   ),
                 ),
+
                 SizedBox(height: 32.h),
                 Container(
                   alignment: Alignment.center,
@@ -112,7 +113,7 @@ class _PageViewBasicInformationState extends State<PageViewBasicInformation> {
                       }
                     },
                     child: file == null
-                        ? CustomImage(
+                        ? CustomImageAndDiscription(
                             image: Image.asset(
                               'assets/image/png/empty_photo.png',
                               width: 80.w,
@@ -120,7 +121,7 @@ class _PageViewBasicInformationState extends State<PageViewBasicInformation> {
                             ),
                             text: 'تحميل صورة شخصية',
                           )
-                        : CustomImage(
+                        : CustomImageAndDiscription(
                             image: CircleAvatar(
                               backgroundColor: AppColor.jetStream,
                               radius: 40.r,
@@ -147,29 +148,6 @@ class _PageViewBasicInformationState extends State<PageViewBasicInformation> {
               await cubit.nextmove();
             },
             fixedHeight: 40.h,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class CustomImage extends StatelessWidget {
-  const CustomImage({super.key, required this.image, required this.text});
-  final Widget image;
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        image,
-        Text(
-          text,
-          style: AppTextStyle.regular16.copyWith(
-            color: AppColor.primary,
-            decoration: TextDecoration.underline,
           ),
         ),
       ],
