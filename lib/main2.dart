@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:uni_links/uni_links.dart';
 import 'package:flutter/services.dart';
+import 'package:uni_links/uni_links.dart';
 
+// ✅ صفحات التوجيه
 import 'auth/login_2/register_page.dart' as register;
 import 'auth/login_2/login_page.dart' as login;
 import 'auth/password_management/forget_password_page.dart';
@@ -22,41 +23,47 @@ class _MyAppState extends State<MyApp> {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   StreamSubscription? _sub;
 
+  static const platform = MethodChannel("deep_link_channel");
+
   @override
   void initState() {
     super.initState();
-    _initDeepLinks();
+    _handleInitialDeepLink();
+    _listenToDeepLinks();
   }
 
-  void _initDeepLinks() async {
+  Future<void> _handleInitialDeepLink() async {
     try {
-      final uri = await getInitialUri();
+      final String? link = await platform.invokeMethod('getInitialLink');
+      if (link != null) {
+        _navigateFromUri(Uri.parse(link));
+      }
+    } on PlatformException catch (e) {
+      print('❌ Failed to get initial link from Android: $e');
+    }
+  }
+
+  void _listenToDeepLinks() {
+    _sub = uriLinkStream.listen((Uri? uri) {
       if (uri != null) {
         _navigateFromUri(uri);
       }
-    } on PlatformException {
-      print('PlatformException: Failed to get initial URI');
-    } on FormatException {
-      print('FormatException: Malformed initial URI');
-    }
-
-    _sub = uriLinkStream.listen((Uri? uri) {
-      if (uri != null) _navigateFromUri(uri);
     }, onError: (err) {
-      print('URI Stream error: $err');
+      print('❌ URI Stream error: $err');
     });
   }
 
   void _navigateFromUri(Uri uri) {
-    print('Received URI: $uri');
-    print('Path: ${uri.path}');
-    print('Query parameters: ${uri.queryParameters}');
+    print('🔗 Received URI: $uri');
+    print('📍 Path: ${uri.path}');
+    print('🧾 Query parameters: ${uri.queryParameters}');
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (navigatorKey.currentState == null) return;
+
       if (uri.path == '/reset-password') {
         final email = uri.queryParameters['email'];
         final token = uri.queryParameters['token'];
-        print('Reset password - Email: $email, Token: $token');
         if (email != null && token != null) {
           navigatorKey.currentState?.pushNamed(
             '/reset-password',
@@ -65,7 +72,6 @@ class _MyAppState extends State<MyApp> {
         }
       } else if (uri.path == '/confirm-email') {
         final email = uri.queryParameters['email'];
-        print('Confirm email - Email: $email');
         if (email != null) {
           navigatorKey.currentState?.pushNamed(
             '/verify-email',
@@ -94,7 +100,7 @@ class _MyAppState extends State<MyApp> {
       ),
       initialRoute: '/login',
       onGenerateRoute: (settings) {
-        print('Navigating to: ${settings.name}');
+        final args = settings.arguments as Map<String, dynamic>?;
 
         switch (settings.name) {
           case '/register':
@@ -104,10 +110,7 @@ class _MyAppState extends State<MyApp> {
           case '/forgot-password':
             return MaterialPageRoute(builder: (_) => ForgetPasswordPage());
           case '/reset-password':
-            final args = settings.arguments as Map<String, dynamic>?;
-            if (args != null &&
-                args.containsKey('email') &&
-                args.containsKey('token')) {
+            if (args != null && args.containsKey('email') && args.containsKey('token')) {
               return MaterialPageRoute(
                 builder: (_) => ResetPasswordPage(
                   email: args['email'],
@@ -117,7 +120,6 @@ class _MyAppState extends State<MyApp> {
             }
             return MaterialPageRoute(builder: (_) => login.LoginPage());
           case '/verify-email':
-            final args = settings.arguments as Map<String, dynamic>?;
             if (args != null && args.containsKey('email')) {
               return MaterialPageRoute(
                 builder: (_) => VerifyEmailPage(email: args['email']),

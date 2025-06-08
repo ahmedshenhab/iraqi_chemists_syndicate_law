@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.example.iraqi_chemists_syndicate_law",
+      "sha256_cert_fingerprints": [
+        "2C:1A:67:9A:10:E1:FD:6A:9D:1D:5B:71:68:58:4F:BA:7E:3B:95:E3:43:1C:D5:97:CA:6F:2F:55:A9:3B:7E:14"
+      ]
+    }
+  }
+]

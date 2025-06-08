@@ -19,6 +19,12 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
 
   bool isLoading = false;
 
+  @override
+  void initState() {
+    super.initState();
+    print('📥 Email from deep link: ${widget.email}');
+    print('🔑 Token from deep link: ${widget.token}');
+  }
   Future<void> resetPassword() async {
     if (!_formKey.currentState!.validate()) return;
 

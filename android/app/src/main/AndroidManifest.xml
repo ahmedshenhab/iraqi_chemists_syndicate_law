@@ -2,96 +2,86 @@
     package="com.example.iraqi_chemists_syndicate_law">
 
     <application
-        android:label="iraqi_chemists_syndicate_law"
         android:name="${applicationName}"
+        android:label="iraqi_chemists_syndicate_law"
         android:icon="@mipmap/ic_launcher">
 
         <activity
             android:name=".MainActivity"
-            android:exported="true"
             android:launchMode="singleTop"
-            android:taskAffinity=""
+            android:exported="true"
             android:theme="@style/LaunchTheme"
-            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:taskAffinity="">
 
-            <!-- Theme during loading -->
+            <!-- Flutter launch theme -->
             <meta-data
                 android:name="io.flutter.embedding.android.NormalTheme"
                 android:resource="@style/NormalTheme" />
 
-            <!-- Intent filter للروابط العميقة الخاصة باستعادة كلمة المرور (https) -->
-            <intent-filter android:autoVerify="true">
+            <!-- 🔗 Deep Link: Reset Password via HTTPS -->
+            <intent-filter android:autoVerify="false">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data
                     android:scheme="https"
                     android:host="chemistssyndicate.runasp.net"
-                    android:pathPrefix="/reset-password" />
+                    android:path="/reset-password" />
             </intent-filter>
 
-            <!-- Intent filter للروابط العميقة الخاصة بتأكيد البريد الإلكتروني (https) -->
-            <intent-filter android:autoVerify="true">
+            <!-- 🔗 Deep Link: Confirm Email via HTTPS -->
+            <intent-filter android:autoVerify="false">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data
                     android:scheme="https"
                     android:host="chemistssyndicate.runasp.net"
-                    android:pathPrefix="/confirm-email" />
+                    android:path="/confirm-email" />
             </intent-filter>
 
-            <!-- Intent filter لاستقبال كل الروابط من الدومين (https) -->
-            <intent-filter android:autoVerify="true">
+            <!-- Catch-all for HTTPS (optional) -->
+            <intent-filter android:autoVerify="false">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data
-                    android:scheme="https"
-                    android:host="chemistssyndicate.runasp.net" />
+                <data android:scheme="https" android:host="chemistssyndicate.runasp.net" />
             </intent-filter>
 
-            <!-- Intent filter للروابط العميقة الخاصة بـ custom scheme pharmaapp://reset-password -->
+            <!-- ✅ Custom scheme for testing: myapp://reset-password -->
             <intent-filter android:autoVerify="false">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data
-                    android:scheme="pharmaapp"
+                    android:scheme="myapp"
                     android:pathPrefix="/reset-password" />
             </intent-filter>
 
-            <!-- Intent filter للروابط العميقة الخاصة بـ custom scheme pharmaapp://confirm-email -->
+            <!-- ✅ Custom scheme for testing: myapp://confirm-email -->
             <intent-filter android:autoVerify="false">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data
-                    android:scheme="pharmaapp"
+                    android:scheme="myapp"
                     android:pathPrefix="/confirm-email" />
             </intent-filter>
 
-            <!-- Intent filter لتشغيل التطبيق كـ Launcher -->
+            <!-- Launcher intent -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
 
-        <!-- تسجيل Flutter embedding version 2 -->
+        <!-- Required by Flutter -->
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
 
-    <!-- سماح لعمليات التعامل مع نصوص (Text processing plugins) -->
-    <queries>
-        <intent>
-            <action android:name="android.intent.action.PROCESS_TEXT" />
-            <data android:mimeType="text/plain" />
-        </intent>
-    </queries>
 </manifest>

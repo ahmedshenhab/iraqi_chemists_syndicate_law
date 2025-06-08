@@ -60,7 +60,6 @@ class _ForgetPasswordPageState extends State<ForgetPasswordPage> {
           body: jsonEncode({
             "email": emailController.text,
             "clientUrl": "https://chemistssyndicate.runasp.net/reset-password",
-            "checkEmail": emailController.text
           }),
 
 
