@@ -23,10 +23,9 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
 
     final Map<String, dynamic> data = {
       "email": widget.email,
-      "clientUrl": "https://chemistssyndicate.runasp.net/reset-password",
+      "clientUrl": "https://rewan120.github.io/reset-password-page/",
       "checkEmail": true,
     };
-
 
     try {
       final response = await http.post(
@@ -73,69 +72,113 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
         body: Center(
           child: Container(
             width: 343,
-            height: 664,
             padding: EdgeInsets.symmetric(horizontal: 16),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(height: 30),
-                Image.asset(
-                  'assets/image/png/logo.png',
-                  height: 120,
-                ),
-                SizedBox(height: 30),
-                Text(
-                  'تحقق من بريدك الإلكتروني',
-                  style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.w900,
-                    color: Colors.black,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: 15),
-                Text(
-                  'اضغط على الرابط الموجود في البريد لتأكيد حسابك.\nلقد أرسلنا رابط تأكيد إلى ${widget.email}',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.black87,
-                    fontWeight: FontWeight.w500,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: 25),
-                Text(
-                  'لم يصلك البريد الإلكتروني؟',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.green.shade700,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: 16),
-                SizedBox(
-                  width: double.infinity,
-                  height: 48,
-                  child: ElevatedButton(
-                    onPressed: isLoading ? null : resendEmail,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF116845),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 10),
+                      Image.asset(
+                        'assets/image/png/logo.png',
+                        height: 140,
                       ),
-                      padding: EdgeInsets.symmetric(vertical: 12),
-                    ),
-                    child: isLoading
-                        ? CircularProgressIndicator(color: Colors.white)
-                        : Text(
-                      'إعادة إرسال البريد',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
+                      SizedBox(height: 40),
+                      Text(
+                        'تحقق من بريدك الإلكتروني',
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.w900,
+                          color: Colors.black,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                    ),
+                      SizedBox(height: 12),
+                      Text(
+                        'اضغط على الرابط الموجود في البريد لتأكيد حسابك.\nلقد أرسلنا رابط تأكيد إلى ${widget.email}',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black87,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 20),
+                      Text(
+                        'لم يصلك البريد الإلكتروني؟',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.green.shade700,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(10, 0, 10, 50),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton.icon(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          icon: Icon(Icons.arrow_back, color: Color(0xFF116845)),
+                          label: Text(
+                            'السابق',
+                            style: TextStyle(
+                              color: Color(0xFF116845),
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                            side: BorderSide(color: Color(0xFF116845)),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            padding: EdgeInsets.symmetric(vertical: 14),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 20),
+                      Expanded(
+                        child: ElevatedButton.icon(
+                          onPressed: isLoading ? null : resendEmail,
+                          icon: isLoading
+                              ? SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: Colors.white,
+                            ),
+                          )
+                              : Icon(Icons.refresh, color: Colors.white),
+                          label: isLoading
+                              ? SizedBox.shrink()
+                              : Text(
+                            'إعادة الإرسال',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xFF116845),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            padding: EdgeInsets.symmetric(vertical: 14),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],

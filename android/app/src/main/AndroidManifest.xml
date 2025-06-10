@@ -1,8 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.iraqi_chemists_syndicate_law">
 
+    <!-- إذن الوصول للإنترنت -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
-        android:name="${applicationName}"
         android:label="iraqi_chemists_syndicate_law"
         android:icon="@mipmap/ic_launcher">
 
@@ -13,45 +15,13 @@
             android:theme="@style/LaunchTheme"
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize"
-            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
-            android:taskAffinity="">
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode">
 
-            <!-- Flutter launch theme -->
             <meta-data
                 android:name="io.flutter.embedding.android.NormalTheme"
                 android:resource="@style/NormalTheme" />
 
-            <!-- 🔗 Deep Link: Reset Password via HTTPS -->
-            <intent-filter android:autoVerify="false">
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data
-                    android:scheme="https"
-                    android:host="chemistssyndicate.runasp.net"
-                    android:path="/reset-password" />
-            </intent-filter>
-
-            <!-- 🔗 Deep Link: Confirm Email via HTTPS -->
-            <intent-filter android:autoVerify="false">
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data
-                    android:scheme="https"
-                    android:host="chemistssyndicate.runasp.net"
-                    android:path="/confirm-email" />
-            </intent-filter>
-
-            <!-- Catch-all for HTTPS (optional) -->
-            <intent-filter android:autoVerify="false">
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https" android:host="chemistssyndicate.runasp.net" />
-            </intent-filter>
-
-            <!-- ✅ Custom scheme for testing: myapp://reset-password -->
+            <!-- Deep link for reset-password -->
             <intent-filter android:autoVerify="false">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -61,7 +31,7 @@
                     android:pathPrefix="/reset-password" />
             </intent-filter>
 
-            <!-- ✅ Custom scheme for testing: myapp://confirm-email -->
+            <!-- Deep link for confirm-email -->
             <intent-filter android:autoVerify="false">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -83,5 +53,4 @@
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
-
 </manifest>

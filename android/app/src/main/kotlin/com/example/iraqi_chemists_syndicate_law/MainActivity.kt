@@ -1,4 +1,4 @@
-package com.example.iraqi_chemists_syndicate_law // ← عدل حسب الباكيج الصحيح
+package com.example.iraqi_chemists_syndicate_law
 
 import android.content.Intent
 import android.net.Uri
@@ -10,34 +10,38 @@ import io.flutter.plugin.common.MethodChannel
 class MainActivity : FlutterActivity() {
     private val CHANNEL = "deep_link_channel"
     private var initialLink: String? = null
+    private var methodChannel: MethodChannel? = null
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
 
-        MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL).setMethodCallHandler { call, result ->
-            if (call.method == "getInitialLink") {
-                result.success(initialLink)
-            } else {
-                result.notImplemented()
+        methodChannel = MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL)
+
+        methodChannel?.setMethodCallHandler { call, result ->
+            when (call.method) {
+                "getInitialLink" -> result.success(initialLink)
+                else -> result.notImplemented()
             }
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        saveIntentData(intent)
+        handleDeepLink(intent)
     }
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        saveIntentData(intent)
+        handleDeepLink(intent)
     }
 
-    private fun saveIntentData(intent: Intent?) {
+    private fun handleDeepLink(intent: Intent?) {
         if (intent?.action == Intent.ACTION_VIEW) {
             val data: Uri? = intent.data
             if (data != null) {
-                initialLink = data.toString() // فقط خزنه، لا تتعامل مع flutterEngine هنا
+                initialLink = data.toString()
+                // Send the link to Flutter if it's already ready
+                methodChannel?.invokeMethod("onDeepLinkReceived", initialLink)
             }
         }
     }

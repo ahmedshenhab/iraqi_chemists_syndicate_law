@@ -169,15 +169,26 @@ class _LoginPageState extends State<LoginPage> {
                     TextFormField(
                       controller: _emailController,
                       focusNode: _emailFocusNode,
-                      decoration: buildInputDecoration('البريد الإلكتروني', 'email', _emailController, _emailFocusNode),
+                      decoration: buildInputDecoration(
+                        'البريد الإلكتروني',
+                        'email',
+                        _emailController,
+                        _emailFocusNode,
+                      ),
                       keyboardType: TextInputType.emailAddress,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) {
-                        if (value == null || value.isEmpty) return 'الرجاء إدخال البريد الإلكتروني';
-                        if (!RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) return 'البريد الإلكتروني غير صالح';
+                        if (value == null || value.isEmpty) {
+                          return 'الرجاء إدخال البريد الإلكتروني';
+                        }
+                        if (!RegExp(r'^[\w\.-]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+                          return 'البريد الإلكتروني غير صالح. يجب أن يشابه name@gmail.com';
+                        }
                         return null;
                       },
                       onChanged: (_) => setState(() {}),
                     ),
+
 
                     SizedBox(height: 25),
 
@@ -185,7 +196,12 @@ class _LoginPageState extends State<LoginPage> {
                       controller: _passwordController,
                       focusNode: _passwordFocusNode,
                       obscureText: _obscurePassword,
-                      decoration: buildInputDecoration('كلمة المرور', 'password', _passwordController, _passwordFocusNode).copyWith(
+                      decoration: buildInputDecoration(
+                        'كلمة المرور',
+                        'password',
+                        _passwordController,
+                        _passwordFocusNode,
+                      ).copyWith(
                         suffixIcon: IconButton(
                           icon: Icon(
                             _obscurePassword ? Icons.visibility_off : Icons.visibility,
@@ -198,13 +214,22 @@ class _LoginPageState extends State<LoginPage> {
                           },
                         ),
                       ),
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) {
-                        if (value == null || value.isEmpty) return 'الرجاء إدخال كلمة المرور';
-                        if (value.length < 6) return 'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
+                        if (value == null || value.isEmpty) {
+                          return 'الرجاء إدخال كلمة المرور';
+                        }
+                        if (value.length < 6) {
+                          return 'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
+                        }
+                        if (!RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#\$%\^&\*])').hasMatch(value)) {
+                          return 'كلمة المرور يجب أن تحتوي على حرف صغير، حرف كبير، رقم، وحرف خاص (!@#\$%^&*)';
+                        }
                         return null;
                       },
                       onChanged: (_) => setState(() {}),
                     ),
+
 
                     SizedBox(height: 10),
 

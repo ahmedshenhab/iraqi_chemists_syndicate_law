@@ -53,9 +53,11 @@ class _RegisterPageState extends State<RegisterPage> {
     try {
       final streamedResponse = await request.send();
       final response = await http.Response.fromStream(streamedResponse);
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-
         showDialog(
           context: context,
           builder: (_) => AlertDialog(
@@ -66,8 +68,6 @@ class _RegisterPageState extends State<RegisterPage> {
                 onPressed: () {
                   Navigator.pop(context); // تغلق الرسالة
                   Navigator.pop(context); // ترجع لصفحة تسجيل الدخول أو الصفحة السابقة
-                  // أو لو تريد تنتقل مباشرة لصفحة تسجيل الدخول:
-                  // Navigator.pushReplacementNamed(context, '/login_page');
                 },
                 child: Text("حسناً"),
               ),
@@ -75,11 +75,25 @@ class _RegisterPageState extends State<RegisterPage> {
           ),
         );
       } else {
-        final respBody = jsonDecode(response.body);
         String errorMsg = 'حدث خطأ أثناء التسجيل.';
-        if (respBody is Map && respBody.containsKey('Message')) {
-          errorMsg = respBody['Message'];
-        }
+        try {
+          final respBody = jsonDecode(response.body);
+
+          // لو الخطأ موجود في ModelState (أكثر من خطأ أو تفاصيل)
+          if (respBody is Map && respBody.containsKey('errors')) {
+            final errors = respBody['errors'];
+            if (errors is Map) {
+              errorMsg = errors.values
+                  .map((e) => e is List ? e.join('\n') : e.toString())
+                  .join('\n');
+            }
+          } else if (respBody is Map && respBody.containsKey('Message')) {
+            errorMsg = respBody['Message'];
+          } else if (respBody is String) {
+            errorMsg = respBody;
+          }
+        } catch (_) {}
+
         showDialog(
           context: context,
           builder: (_) => AlertDialog(
@@ -110,7 +124,6 @@ class _RegisterPageState extends State<RegisterPage> {
       );
     }
   }
-
   InputDecoration buildInputDecoration(String label) {
     return InputDecoration(
       labelText: label,
@@ -150,7 +163,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
+    return Directionality( // دي الجزء اللي بيخلي الواجهة تشتغل RTL
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(title: Text('إنشاء حساب')),
@@ -159,28 +172,39 @@ class _RegisterPageState extends State<RegisterPage> {
           child: Form(
             key: _formKey,
             child: Column(
-              children: [
+                children: [
                 const SizedBox(height: 20),
-                Center(
-                  child: Image.asset(
-                    'assets/image/png/logo.png',
-                    height: 120,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                const Text(
-                  'إنشاء حساب',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            Center(
+              child: Image.asset(
+                'assets/image/png/logo.png',
+                height: 120,
+              ),
+            ),
+            const SizedBox(height: 20),
+            const Text(
+              'إنشاء حساب',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 20),
 
                 TextFormField(
                   controller: _fullNameController,
-                  decoration: buildInputDecoration('الاسم الثلاثي'),
+                  decoration: buildInputDecoration('الاسم الثلاثي باللغة العربية'),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (value) =>
-                  (value == null || value.isEmpty) ? 'الرجاء إدخال الاسم الثلاثي' : null,
+                  textDirection: TextDirection.rtl, // عشان النص يكتب من اليمين لليسار
+                  keyboardType: TextInputType.text,  // نوع الكيبورد نصي عادي
+                  textInputAction: TextInputAction.done,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'الرجاء إدخال الاسم الثلاثي';
+                    }
+                    if (!RegExp(r'^[\u0600-\u06FF\s]+$').hasMatch(value)) {
+                      return 'يجب أن يحتوي الاسم على أحرف عربية فقط بدون أرقام أو رموز';
+                    }
+                    return null;
+                  },
                 ),
+
                 const SizedBox(height: 15),
 
                 TextFormField(
@@ -192,8 +216,8 @@ class _RegisterPageState extends State<RegisterPage> {
                     if (value == null || value.isEmpty) {
                       return 'الرجاء إدخال البريد الإلكتروني';
                     }
-                    if (!RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
-                      return 'البريد الإلكتروني غير صالح';
+                    if (!RegExp(r'^[\w\.-]+@[\w\.-]+\.\w+$').hasMatch(value)) {
+                      return 'البريد الإلكتروني غير صالح يجب أن يشابه name@gmail.com';
                     }
                     return null;
                   },
@@ -209,11 +233,12 @@ class _RegisterPageState extends State<RegisterPage> {
                     if (value == null || value.isEmpty) {
                       return 'الرجاء إدخال رقم الهاتف';
                     }
-                    if (!RegExp(r'^\+?\d{8,15}$').hasMatch(value)) {
-                      return 'رقم الهاتف غير صالح';
+                    if (!RegExp(r'^\d{10,}$').hasMatch(value)) {
+                      return 'رقم الهاتف يجب أن يحتوي على 10 أرقام على الأقل';
                     }
                     return null;
                   },
+
                 ),
                 const SizedBox(height: 15),
 
@@ -240,6 +265,10 @@ class _RegisterPageState extends State<RegisterPage> {
                     }
                     if (value.length < 6) {
                       return 'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
+                    }
+                    if (!RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#\$%\^&\*]).{6,}$').hasMatch(value)) {
+                      return 'كلمة المرور يجب أن تحتوي على حرف صغير، حرف كبير، رقم، وحرف خاص'
+                          ' (!@#\$%^&*)';
                     }
                     return null;
                   },
@@ -268,57 +297,60 @@ class _RegisterPageState extends State<RegisterPage> {
                       return 'الرجاء تأكيد كلمة المرور';
                     }
                     if (value != _passwordController.text) {
-                      return 'كلمة المرور غير متطابقة';
+                      return 'كلمة المرور وتأكيدها غير متطابقين';
                     }
                     return null;
                   },
+
                 ),
 
                 const SizedBox(height: 15),
 
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: Text(
-                        'هل أنت منتسب من قبل؟',
-                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: Text(
+                          'هل أنت منتسب من قبل؟',
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                        ),
                       ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: RadioListTile<String>(
-                        title: const Text('نعم'),
-                        value: 'yes',
-                        groupValue: _isMember,
-                        onChanged: (value) {
-                          setState(() {
-                            _isMember = value;
-                          });
-                        },
-                        dense: true,
-                        contentPadding: EdgeInsets.zero,
+                      Expanded(
+                        flex: 1,
+                        child: RadioListTile<String>(
+                          title: const Text('نعم'),
+                          value: 'yes',
+                          groupValue: _isMember,
+                          onChanged: (value) {
+                            setState(() {
+                              _isMember = value;
+                            });
+                          },
+                          dense: true,
+                          contentPadding: EdgeInsets.symmetric(horizontal: 4),
+                          activeColor: Color(0xFF81C784), // أخضر فاتح
+                        ),
                       ),
-                    ),
-                    Expanded(
-                      flex: 1,
-                      child: RadioListTile<String>(
-                        title: const Text('لا'),
-                        value: 'no',
-                        groupValue: _isMember,
-                        onChanged: (value) {
-                          setState(() {
-                            _isMember = value;
-                          });
-                        },
-                        dense: true,
-                        contentPadding: EdgeInsets.zero,
+                      Expanded(
+                        flex: 1,
+                        child: RadioListTile<String>(
+                          title: const Text('لا'),
+                          value: 'no',
+                          groupValue: _isMember,
+                          onChanged: (value) {
+                            setState(() {
+                              _isMember = value;
+                            });
+                          },
+                          dense: true,
+                          contentPadding: EdgeInsets.symmetric(horizontal: 4),
+                          activeColor: Color(0xFF81C784), // أخضر فاتح
+                        ),
                       ),
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
 
-                Row(
+                  Row(
                   children: [
                     Checkbox(
                       value: _acceptedTerms,
@@ -329,11 +361,42 @@ class _RegisterPageState extends State<RegisterPage> {
                       },
                     ),
                     Flexible(
-                      child: Text(
-                        'أوافق على الشروط وسياسات الخصوصية',
-                        style: TextStyle(fontSize: 16),
+                      child: RichText(
+                        text: TextSpan(
+                          text: 'أوافق على ',
+                          style: TextStyle(fontSize: 16, color: Colors.black),
+                          children: [
+                            TextSpan(
+                              text: 'الشروط',
+                              style: TextStyle(
+                                color: Colors.red,
+                                decoration: TextDecoration.underline,
+                              ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  // افتح صفحة الشروط هنا
+                                },
+                            ),
+                            TextSpan(
+                              text: ' و سياسات ',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                            TextSpan(
+                              text: 'الخصوصية',
+                              style: TextStyle(
+                                color: Colors.red,
+                                decoration: TextDecoration.underline,
+                              ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  // افتح صفحة الخصوصية هنا
+                                },
+                            ),
+                          ],
+                        ),
                       ),
                     ),
+
                   ],
                 ),
 
@@ -352,37 +415,36 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   child: Text(
                     'إنشاء حساب',
-                    style: TextStyle(fontSize: 18, color: Colors.white),
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
 
-                const SizedBox(height: 16),
-
+                const SizedBox(height: 20),
 
                 RichText(
                   text: TextSpan(
                     text: 'لديك حساب بالفعل؟ ',
-                    style: TextStyle(color: Colors.black, fontSize: 16),
+                    style: TextStyle(color: Colors.black),
                     children: [
                       TextSpan(
                         text: 'تسجيل الدخول',
                         style: TextStyle(
-                          color: Color(0xFF116845),
-                          fontSize: 16,
+                          color: Colors.green[700],
                           fontWeight: FontWeight.bold,
                         ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            Navigator.pushNamed(context, '/login_page');
-
-                            // Navigator.push(context, MaterialPageRoute(builder: (_) => LoginPage()));
+                            Navigator.pop(context); // أو استخدمي الانتقال لصفحة تسجيل الدخول
+                            // Navigator.pushNamed(context, '/login');
                           },
                       ),
                     ],
                   ),
                 ),
-
-                const SizedBox(height: 20),
               ],
             ),
           ),
