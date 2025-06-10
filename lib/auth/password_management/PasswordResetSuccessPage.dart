@@ -16,7 +16,7 @@ class PasswordResetSuccessPage extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 80), // ✅ المسافة اللي بتنزل الكلام تحت
+                    const SizedBox(height: 80),
                     Image.asset(
                       'assets/image/png/logo.png',
                       height: 150,

@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:uni_links/uni_links.dart';
 import 'dart:async';
 
-// ✅ صفحات التوجيه
 import 'auth/login_2/register_page.dart' as register;
 import 'auth/login_2/login_page.dart' as login;
 import 'auth/password_management/forget_password_page.dart';
@@ -11,7 +10,7 @@ import 'auth/password_management/reset_password_page.dart';
 import 'auth/password_management/VerifyEmailPage.dart';
 import '../auth/password_management/PasswordResetSuccessPage.dart';
 
-import 'package:flutter_localizations/flutter_localizations.dart'; // إضافة الدعم لل Localization
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   runApp(MyApp());
@@ -28,7 +27,7 @@ class _MyAppState extends State<MyApp> {
 
   static const platform = MethodChannel("deep_link_channel");
 
-  bool _navigatedAlready = false; // لمنع التنقل المتكرر
+  bool _navigatedAlready = false;
 
   @override
   void initState() {
@@ -101,9 +100,6 @@ class _MyAppState extends State<MyApp> {
         },
       );
 
-      // لو حابب تسمح بالتنقل مرة ثانية بعد الرجوع مثلاً،
-      // تقدر تعيد _navigatedAlready إلى false هنا أو في صفحة reset-password
-      // _navigatedAlready = false; // اختياري حسب سيناريو التطبيق
     });
   }
 
@@ -124,7 +120,7 @@ class _MyAppState extends State<MyApp> {
         fontFamily: 'Arial',
       ),
 
-      // إضافة دعم اللغة العربية والـ RTL
+
       locale: const Locale('ar'),
       supportedLocales: const [
         Locale('ar'),

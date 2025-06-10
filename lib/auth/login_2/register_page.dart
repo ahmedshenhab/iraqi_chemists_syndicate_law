@@ -66,8 +66,8 @@ class _RegisterPageState extends State<RegisterPage> {
             actions: [
               TextButton(
                 onPressed: () {
-                  Navigator.pop(context); // تغلق الرسالة
-                  Navigator.pop(context); // ترجع لصفحة تسجيل الدخول أو الصفحة السابقة
+                  Navigator.pop(context);
+                  Navigator.pop(context);
                 },
                 child: Text("حسناً"),
               ),
@@ -79,7 +79,7 @@ class _RegisterPageState extends State<RegisterPage> {
         try {
           final respBody = jsonDecode(response.body);
 
-          // لو الخطأ موجود في ModelState (أكثر من خطأ أو تفاصيل)
+
           if (respBody is Map && respBody.containsKey('errors')) {
             final errors = respBody['errors'];
             if (errors is Map) {
@@ -163,7 +163,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality( // دي الجزء اللي بيخلي الواجهة تشتغل RTL
+    return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(title: Text('إنشاء حساب')),
@@ -328,7 +328,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           },
                           dense: true,
                           contentPadding: EdgeInsets.symmetric(horizontal: 4),
-                          activeColor: Color(0xFF81C784), // أخضر فاتح
+                          activeColor: Color(0xFF81C784),
                         ),
                       ),
                       Expanded(
@@ -344,7 +344,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           },
                           dense: true,
                           contentPadding: EdgeInsets.symmetric(horizontal: 4),
-                          activeColor: Color(0xFF81C784), // أخضر فاتح
+                          activeColor: Color(0xFF81C784),
                         ),
                       ),
                     ],
@@ -374,7 +374,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  // افتح صفحة الشروط هنا
+
                                 },
                             ),
                             TextSpan(
@@ -389,7 +389,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
-                                  // افتح صفحة الخصوصية هنا
+
                                 },
                             ),
                           ],
@@ -438,7 +438,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            Navigator.pop(context); // أو استخدمي الانتقال لصفحة تسجيل الدخول
+                            Navigator.pop(context);
                             // Navigator.pushNamed(context, '/login');
                           },
                       ),
