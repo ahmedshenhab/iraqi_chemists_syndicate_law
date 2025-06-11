@@ -7,13 +7,12 @@ import 'package:iraqi_chemists_syndicate_law/core/ui/theme/app_light_theme.dart'
 import 'package:iraqi_chemists_syndicate_law/generated/l10n.dart';
 import 'package:iraqi_chemists_syndicate_law/module/membership_registeration/membership_registeration_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:iraqi_chemists_syndicate_law/module/surname_changed/surname_changed.dart';
 import 'firebase_options.dart';
 
 void main() async {
   await setupApp();
-await Firebase.initializeApp(
-  options: DefaultFirebaseOptions.currentPlatform,
-);
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   runApp(const MyApp());
 }
@@ -39,10 +38,8 @@ class MyApp extends StatelessWidget {
         ],
         locale: const Locale('ar'),
         supportedLocales: S.delegate.supportedLocales,
-        initialRoute: MembershipRegisterationScreen.routeName,
+        initialRoute: SurnameChanged.routeName,
       ),
     );
   }
 }
-// دا كومنت
-// تاني

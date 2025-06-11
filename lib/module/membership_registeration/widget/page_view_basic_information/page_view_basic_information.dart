@@ -4,16 +4,19 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iraqi_chemists_syndicate_law/core/reusable/custom_elevated_icon_button.dart';
 import 'package:iraqi_chemists_syndicate_law/core/ui/style/app_color.dart';
 import 'package:iraqi_chemists_syndicate_law/core/ui/style/app_text_style.dart';
-import 'package:iraqi_chemists_syndicate_law/module/membership_registeration/widget/page_view_pledge_and_register_form.dart';
+import 'package:iraqi_chemists_syndicate_law/module/membership_registeration/cubit/membership_registeration_cubit.dart';
+import 'package:iraqi_chemists_syndicate_law/module/membership_registeration/widget/page_view_basic_information/widget/form_basic_information.dart';
+import 'package:iraqi_chemists_syndicate_law/module/membership_registeration/widget/page_view_basic_information/widget/personal_image_basic_information.dart';
 
-class PledgeAndRegistration extends StatefulWidget {
-  const PledgeAndRegistration({super.key});
+class PageViewBasicInformation extends StatefulWidget {
+  const PageViewBasicInformation({super.key});
 
   @override
-  State<PledgeAndRegistration> createState() => _PledgeAndRegistrationState();
+  State<PageViewBasicInformation> createState() =>
+      _PageViewBasicInformationState();
 }
 
-class _PledgeAndRegistrationState extends State<PledgeAndRegistration> {
+class _PageViewBasicInformationState extends State<PageViewBasicInformation> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -25,12 +28,16 @@ class _PledgeAndRegistrationState extends State<PledgeAndRegistration> {
               children: [
                 SizedBox(height: 12.h),
                 Image.asset(
-                  'assets/image/png/logo.png',
+                  'assets/image/svg/logo.svg',
                   width: 80.w,
                   height: 102.h,
                 ),
                 SizedBox(height: 24.h),
-                const PageViewPledgeAndRegisterForm(),
+                const FormBasicInformation(),
+
+                SizedBox(height: 32.h),
+
+                const PersonalImageBasicInformation(),
               ],
             ),
           ),

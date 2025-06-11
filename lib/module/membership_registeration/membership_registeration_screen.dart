@@ -13,13 +13,7 @@ class MembershipRegisterationScreen extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: const Column(
-            children: [
-             
-
-              Expanded(child: PageViews()),
-            ],
-          ),
+          child: const PageViews(),
         ),
       ),
     );

@@ -31,26 +31,3 @@ class Done extends StatelessWidget {
   }
 }
 
-class CustomCheckBox extends StatelessWidget {
-  const CustomCheckBox({
-    super.key,
-    required this.widget,
-    required this.onChanged,
-    required this.value,
-  });
-
-  final Widget widget;
-  final void Function(bool?)? onChanged;
-  final bool? value;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Checkbox.adaptive(value: value, onChanged: onChanged),
-        widget,
-      ],
-    );
-  }
-}

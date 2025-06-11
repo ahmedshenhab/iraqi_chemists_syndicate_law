@@ -19,4 +19,6 @@ class AppColor {
   static const Color charcoalGray = Color(0xFF4B5563);
 
   static const Color jetStream = Color(0xFFB5D0C5);
+
+  static const Color seaSerpent = Color(0xFF58AAC0);
 }

@@ -14,10 +14,19 @@ class CustomTextFormField extends StatelessWidget {
     this.readOnly = false,
     this.isHiddenPassword = false,
     this.suffixIconButton,
+
     required this.validator,
     this.type,
     this.onTap,
     this.hintText,
+    this.labelStyle,
+    this.floatingLabelStyle,
+    this.contentPadding,
+    this.cursorColor,
+    this.cursorHeight,
+    this.cursorErrorColor,
+    this.borderRadius,
+    this.hintStyle, this.style,
   });
 
   final void Function(String)? onSubmit;
@@ -27,17 +36,26 @@ class CustomTextFormField extends StatelessWidget {
   final String? labelText;
   final String? hintText;
   final bool readOnly;
+  final TextStyle? style;
 
   final bool isHiddenPassword;
   final Widget? suffixIconButton;
   final String? Function(String?) validator;
   final TextInputType? type;
+  final TextStyle? labelStyle;
+  final TextStyle? floatingLabelStyle;
+  final EdgeInsetsGeometry? contentPadding;
+  final Color? cursorColor;
+  final double? cursorHeight;
+  final Color? cursorErrorColor;
+  final double? borderRadius;
+  final TextStyle? hintStyle;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       autovalidateMode: AutovalidateMode.disabled,
-      style: TextStyle(
+      style:   style?? TextStyle(
         fontSize: 14.sp,
         fontWeight: AppFontWeight.regular,
         color: Colors.black87,
@@ -49,9 +67,12 @@ class CustomTextFormField extends StatelessWidget {
       controller: controller,
       keyboardType: type ?? TextInputType.text,
       validator: validator,
-      cursorColor: AppColor.black, // ✅ Replace teal
+      cursorColor: cursorColor ?? AppColor.primary, // ✅ Replace teal
+      cursorHeight: cursorHeight,
+      cursorErrorColor: cursorErrorColor,
 
       decoration: InputDecoration(
+        contentPadding: contentPadding,
         floatingLabelBehavior: readOnly
             ? FloatingLabelBehavior.never
             : FloatingLabelBehavior.auto,
@@ -60,9 +81,12 @@ class CustomTextFormField extends StatelessWidget {
         filled: true,
         fillColor: AppColor.white,
         hintText: hintText,
+        hintStyle:
+            hintStyle ?? AppTextStyle.regular14.copyWith(color: AppColor.grey),
 
-        labelStyle: AppTextStyle.regular14.copyWith(color: AppColor.grey),
-        floatingLabelStyle: AppTextStyle.regular14,
+        labelStyle:
+            labelStyle ?? AppTextStyle.regular14.copyWith(color: AppColor.grey),
+        floatingLabelStyle: floatingLabelStyle ?? AppTextStyle.regular14,
 
         suffixIcon: suffixIconButton,
 
@@ -73,19 +97,19 @@ class CustomTextFormField extends StatelessWidget {
           color: AppColor.red,
         ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.r),
+          borderRadius: BorderRadius.circular(borderRadius ?? 8.r),
           borderSide: const BorderSide(color: Colors.grey),
         ),
 
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.r),
+          borderRadius: BorderRadius.circular(borderRadius ?? 8.r),
           borderSide: BorderSide(
             color: readOnly ? AppColor.grey : AppColor.primary,
           ),
         ),
 
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8.r),
+          borderRadius: BorderRadius.circular(borderRadius ?? 8.r),
           borderSide: const BorderSide(color: AppColor.grey),
         ),
       ),
