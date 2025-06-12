@@ -12,7 +12,16 @@ class AppTextStyle {
     fontSize: 20.sp,
     fontWeight: AppFontWeight.medium,
   );
-  //regular7
+  //ligh9
+  static TextStyle light9 = TextStyle(
+    fontSize: 9.sp,
+    fontWeight: AppFontWeight.light,
+  );
+
+  static TextStyle regular12 = TextStyle(
+    fontSize: 11.sp,
+    fontWeight: AppFontWeight.regular,
+  );
   static TextStyle regular7 = TextStyle(
     fontSize: 7.sp,
     fontWeight: AppFontWeight.regular,
@@ -42,6 +51,7 @@ class AppTextStyle {
     fontSize: 10.sp,
     fontWeight: AppFontWeight.regular,
   );
+  
   static TextStyle bold14 = TextStyle(
     fontSize: 14.sp,
     fontWeight: AppFontWeight.bold,

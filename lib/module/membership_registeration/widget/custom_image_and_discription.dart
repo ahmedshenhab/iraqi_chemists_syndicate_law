@@ -10,13 +10,14 @@ class CustomImageAndDiscription extends StatelessWidget {
     required this.text,
     required this.heightBetweenImageAndText,
     this.isVisibleExtension = false,
-    this.isVisibleOptional = false,
+    this.isVisibleOptional = false, this.extensionStyle,
   });
   final Widget image;
   final Widget text;
   final double heightBetweenImageAndText;
   final bool isVisibleExtension;
   final bool isVisibleOptional;
+  final TextStyle? extensionStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +52,7 @@ class CustomImageAndDiscription extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 'الصيغ المسموح بها PDF, PNG & .JPEG',
-                style: AppTextStyle.light7.copyWith(color: AppColor.grey),
+                style: extensionStyle?? AppTextStyle.light7.copyWith(color: AppColor.grey),
               ),
             ],
           ),

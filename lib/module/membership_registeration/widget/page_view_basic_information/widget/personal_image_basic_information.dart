@@ -71,12 +71,12 @@ class _PersonalImageBasicInformationState
 
   void pickImage() async {
     final cubit = MembershipRegisterationCubit.get(context);
-    final XFile? image = await cubit.picker.pickImage(
+    final XFile? image = await ImagePicker().pickImage(
       source: ImageSource.gallery,
     );
 
     setState(() {
-      cubit.personalImage = image != null ? File(image.path) : null;
+      cubit.personalImage = image != null && image.path.isNotEmpty? File(image.path) : null;
     });
   }
 }

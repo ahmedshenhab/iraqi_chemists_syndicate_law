@@ -1,6 +1,11 @@
 part of 'surname_changed_cubit.dart';
 
 @immutable
-sealed class SurnameChangedState {}
+abstract class SurnameChangedState {}
 
-final class SurnameChangedInitial extends SurnameChangedState {}
+class SurnameChangedInitial extends SurnameChangedState {}
+
+class SurnameChangeimage extends SurnameChangedState {}
+
+
+

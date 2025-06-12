@@ -16,6 +16,8 @@ class CustomDropDownFormField<T> extends StatelessWidget {
     required this.icon,
     this.hintStyle,
     this.style,
+    this.validator,
+    this.errorStyle,
   });
   final T? value;
   final List<DropdownMenuItem<T>> items;
@@ -27,6 +29,8 @@ class CustomDropDownFormField<T> extends StatelessWidget {
   final Widget icon;
   final TextStyle? hintStyle;
   final TextStyle? style;
+  final String? Function(T?)? validator;
+  final TextStyle? errorStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -34,13 +38,26 @@ class CustomDropDownFormField<T> extends StatelessWidget {
       value: value,
       items: items,
       onChanged: onChanged,
+      validator: validator,
+      isExpanded: true,
 
       elevation: 1,
+
       style: style ?? AppTextStyle.regular14.copyWith(color: AppColor.black),
       icon: icon,
+      menuMaxHeight: 200.h,
+      errorBuilder: (context, errorText) {
+        return Text(
+          errorText,
+          style:
+              errorStyle ??
+              AppTextStyle.regular12.copyWith(color: AppColor.red),
+        );
+      },
 
       padding: contentPadding,
       decoration: InputDecoration(
+      
         fillColor: AppColor.white,
         hint: Text(
           hintText ?? 'Select an option',
@@ -53,6 +70,19 @@ class CustomDropDownFormField<T> extends StatelessWidget {
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(borderRadius),
           borderSide: BorderSide(color: borderColor ?? AppColor.grey),
+        ),
+
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(borderRadius),
+          borderSide: BorderSide(color: borderColor ?? AppColor.grey),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(borderRadius),
+          borderSide: const BorderSide(color: AppColor.red),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(borderRadius),
+          borderSide: const BorderSide(color: AppColor.red),
         ),
 
         focusedBorder: OutlineInputBorder(

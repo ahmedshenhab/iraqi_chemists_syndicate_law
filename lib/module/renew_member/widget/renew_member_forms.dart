@@ -5,14 +5,14 @@ import 'package:iraqi_chemists_syndicate_law/core/reusable/custom_drop_down_form
 import 'package:iraqi_chemists_syndicate_law/core/reusable/custom_text_form_field.dart';
 import 'package:iraqi_chemists_syndicate_law/core/ui/style/app_color.dart';
 import 'package:iraqi_chemists_syndicate_law/core/ui/style/app_text_style.dart';
-import 'package:iraqi_chemists_syndicate_law/module/surname_changed/cubit/surname_changed_cubit.dart';
+import 'package:iraqi_chemists_syndicate_law/module/renew_member/cubit/renew_member_cubit.dart';
 
-class SurnameChangesForms extends StatelessWidget {
-  const SurnameChangesForms({super.key});
+class RenewMemberForms extends StatelessWidget {
+  const RenewMemberForms({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final cubit = SurnameChangedCubit.get(context);
+    final cubit = RenewMemberCubit.get(context);
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: Form(

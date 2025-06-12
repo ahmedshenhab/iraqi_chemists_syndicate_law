@@ -5,8 +5,8 @@ import 'package:iraqi_chemists_syndicate_law/core/routing/router.dart';
 import 'package:iraqi_chemists_syndicate_law/core/setup.dart';
 import 'package:iraqi_chemists_syndicate_law/core/ui/theme/app_light_theme.dart';
 import 'package:iraqi_chemists_syndicate_law/generated/l10n.dart';
-import 'package:iraqi_chemists_syndicate_law/module/membership_registeration/membership_registeration_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:iraqi_chemists_syndicate_law/module/renew_member/renew_member.dart';
 import 'package:iraqi_chemists_syndicate_law/module/surname_changed/surname_changed.dart';
 import 'firebase_options.dart';
 
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
         ],
         locale: const Locale('ar'),
         supportedLocales: S.delegate.supportedLocales,
-        initialRoute: SurnameChanged.routeName,
+        initialRoute: RenewMember.routeName,
       ),
     );
   }

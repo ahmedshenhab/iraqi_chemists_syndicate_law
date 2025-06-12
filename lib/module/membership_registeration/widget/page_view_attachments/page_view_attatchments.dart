@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iraqi_chemists_syndicate_law/core/reusable/custom_elevated_icon_button.dart';
+import 'package:iraqi_chemists_syndicate_law/core/reusable/reusable.dart';
 import 'package:iraqi_chemists_syndicate_law/core/ui/style/app_color.dart';
 import 'package:iraqi_chemists_syndicate_law/core/ui/style/app_text_style.dart';
 import 'package:iraqi_chemists_syndicate_law/module/membership_registeration/cubit/membership_registeration_cubit.dart';
@@ -31,9 +32,12 @@ class PageViewAttatchments extends StatelessWidget {
                   height: 102.h,
                 ),
                 SizedBox(height: 24.h),
-                SvgPicture.asset(
-                  'assets/image/svg/attachment.svg',
-                  height: 24.h,
+                Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: SvgPicture.asset(
+                    'assets/image/svg/attachment.svg',
+                    height: 24.h,
+                  ),
                 ),
                 SizedBox(height: 16.h),
                 GridView.builder(
@@ -83,7 +87,9 @@ class PageViewAttatchments extends StatelessWidget {
               CustomElevatedIconButton(
                 side: const BorderSide(color: AppColor.primary),
                 backgroundColor: AppColor.white,
-                onPressed: () {},
+                onPressed: () async{
+                await  cubit.previousPage();
+                },
 
                 icon: SvgPicture.asset(
                   'assets/image/svg/skip_previous.svg',
@@ -98,7 +104,25 @@ class PageViewAttatchments extends StatelessWidget {
               ),
 
               CustomElevatedIconButton(
-                onPressed: () {},
+                onPressed: ()async {
+                  final requiredKeys = cubit.attachments
+                      .where((element) => element['isVisibleOptional'] == false)
+                      .map((e) => e['key']);
+
+                  final hasMissingRequiredFile = requiredKeys.any(
+                    (key) => cubit.attachmentFiles[key] == null,
+                  );
+
+                  if (hasMissingRequiredFile) {
+                    buildshowToast(
+                      msg: 'الرجاء تحميل جميع المرفقات المطلوبة',
+                      color: AppColor.red,
+                    );
+                    return;
+                  }
+
+               await   cubit.nextPage();
+                },
 
                 icon: SvgPicture.asset(
                   'assets/image/svg/skip_next.svg',

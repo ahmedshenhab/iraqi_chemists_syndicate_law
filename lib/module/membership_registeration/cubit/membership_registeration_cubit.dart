@@ -3,24 +3,15 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:iraqi_chemists_syndicate_law/module/membership_registeration/cubit/membership_registeration_cubit_state.dart';
 
 class MembershipRegisterationCubit
     extends Cubit<MembershipRegisterationCubitState> {
   MembershipRegisterationCubit()
     : super(MembershipRegisterationCubitInitial()) {
-    pageController = PageController();
+    pageController = PageController(initialPage: 4);
   }
-
-  final picker = ImagePicker();
-
-  bool? isEmployee = false;
-  File? personalImage;
-
-  late PageController pageController;
-  static MembershipRegisterationCubit get(context) => BlocProvider.of(context);
-
+  
   void pickFile(String attachmentKey) async {
     final result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
@@ -86,12 +77,28 @@ class MembershipRegisterationCubit
     },
   ];
 
+ 
+ final formKeyBasicInformation = GlobalKey<FormState>();
+  final formKeyGraduation = GlobalKey<FormState>();
+  final formKeyHomming = GlobalKey<FormState>();
+
+  
+  File? personalImage;
+
+  late PageController pageController;
+  static MembershipRegisterationCubit get(context) => BlocProvider.of(context);
+
   final TextEditingController arabicFullNameController =
       TextEditingController();
   final TextEditingController englishFullNameController =
       TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
+  final zokakController = TextEditingController();
+  final homeController = TextEditingController();
+    bool? isEmployee;
+  bool? isAgreeToTerms = false;
+  bool? isPledgedInfoAccuracy = false;
 
   @override
   Future<void> close() {
@@ -100,6 +107,8 @@ class MembershipRegisterationCubit
     englishFullNameController.dispose();
     emailController.dispose();
     phoneController.dispose();
+    zokakController.dispose();
+    homeController.dispose();
     return super.close();
   }
 }

@@ -3,14 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iraqi_chemists_syndicate_law/core/ui/style/app_color.dart';
 import 'package:iraqi_chemists_syndicate_law/core/ui/style/app_text_style.dart';
-import 'package:iraqi_chemists_syndicate_law/module/membership_registeration/cubit/membership_registeration_cubit.dart';
 
 class Done extends StatelessWidget {
   const Done({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final cubit = MembershipRegisterationCubit.get(context);
 
     return SingleChildScrollView(
       padding: EdgeInsets.only(bottom: 24.h),

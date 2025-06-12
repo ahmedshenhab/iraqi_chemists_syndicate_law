@@ -26,7 +26,9 @@ class CustomTextFormField extends StatelessWidget {
     this.cursorHeight,
     this.cursorErrorColor,
     this.borderRadius,
-    this.hintStyle, this.style,
+    this.hintStyle,
+    this.style,
+    this.errorStyle,
   });
 
   final void Function(String)? onSubmit;
@@ -50,16 +52,18 @@ class CustomTextFormField extends StatelessWidget {
   final Color? cursorErrorColor;
   final double? borderRadius;
   final TextStyle? hintStyle;
+  final TextStyle? errorStyle;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      autovalidateMode: AutovalidateMode.disabled,
-      style:   style?? TextStyle(
-        fontSize: 14.sp,
-        fontWeight: AppFontWeight.regular,
-        color: Colors.black87,
-      ),
+      style:
+          style ??
+          TextStyle(
+            fontSize: 14.sp,
+            fontWeight: AppFontWeight.regular,
+            color: Colors.black87,
+          ),
       readOnly: readOnly,
       onTap: onTap,
       onFieldSubmitted: onSubmit,
@@ -91,10 +95,15 @@ class CustomTextFormField extends StatelessWidget {
         suffixIcon: suffixIconButton,
 
         errorMaxLines: 2,
-        errorStyle: TextStyle(
-          fontSize: 11.sp,
-          fontWeight: FontWeight.w500,
-          color: AppColor.red,
+        errorStyle:
+            errorStyle ?? AppTextStyle.regular12.copyWith(color: AppColor.red),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(borderRadius ?? 8.r),
+          borderSide: const BorderSide(color: AppColor.red),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(borderRadius ?? 8.r),
+          borderSide: const BorderSide(color: AppColor.red),
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(borderRadius ?? 8.r),

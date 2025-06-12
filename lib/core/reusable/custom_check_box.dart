@@ -16,7 +16,7 @@ class CustomCheckBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Checkbox(value: value, onChanged: onChanged),
+        Checkbox( value: value, onChanged: onChanged),
         widget,
       ],
     );

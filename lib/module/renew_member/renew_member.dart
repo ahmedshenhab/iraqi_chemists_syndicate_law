@@ -7,18 +7,17 @@ import 'package:iraqi_chemists_syndicate_law/core/reusable/custom_elevated_icon_
 import 'package:iraqi_chemists_syndicate_law/core/reusable/reusable.dart';
 import 'package:iraqi_chemists_syndicate_law/core/ui/style/app_color.dart';
 import 'package:iraqi_chemists_syndicate_law/core/ui/style/app_text_style.dart';
-import 'package:iraqi_chemists_syndicate_law/module/surname_changed/cubit/surname_changed_cubit.dart';
-import 'package:iraqi_chemists_syndicate_law/module/surname_changed/widget/surname_changes_forms.dart';
-import 'package:iraqi_chemists_syndicate_law/module/surname_changed/widget/surname_changes_images.dart';
+import 'package:iraqi_chemists_syndicate_law/module/renew_member/cubit/renew_member_cubit.dart';
+import 'package:iraqi_chemists_syndicate_law/module/renew_member/widget/renew_member_forms.dart';
+import 'package:iraqi_chemists_syndicate_law/module/renew_member/widget/renew_member_images.dart';
 
-class SurnameChanged extends StatelessWidget {
-  const SurnameChanged({super.key});
-  static const routeName = '/surnameChanged';
-  
+class RenewMember extends StatelessWidget {
+  const RenewMember({super.key});
+  static const routeName = '/renew_member';
 
   @override
   Widget build(BuildContext context) {
-    final cubit = SurnameChangedCubit.get(context);
+    final cubit = RenewMemberCubit.get(context);
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -28,10 +27,10 @@ class SurnameChanged extends StatelessWidget {
                 padding: EdgeInsets.only(bottom: 24.h),
                 child: Column(
                   children: [
-                    const SurnameChangesForms(),
+                    const RenewMemberForms(),
 
                     SizedBox(height: 16.h),
-                    const SurnameChangesImages(),
+                    const RenewMemberImages(),
                   ],
                 ),
               ),
@@ -75,7 +74,7 @@ class SurnameChanged extends StatelessWidget {
                         } else {
                           buildshowToast(
                             msg: 'يجب اختيار صورة شهاده الماجستير',
-                            color: AppColor.primary,
+                            color: AppColor.red,
                           );
                         }
                       }
