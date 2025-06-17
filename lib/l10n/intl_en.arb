@@ -1,1 +1,15 @@
-{}
+{
+  "error_connection": "Connection error. Check your internet.",
+  "error_connection_timeout": "Connection timed out with server.",
+  "error_cancelled": "Request to server was cancelled.",
+  "error_receive_timeout": "Receive timeout with server.",
+  "error_unknown": "Connection to server failed due to internet connection.",
+  "error_send_timeout": "Send timeout with server.",
+  "error_bad_response": "Something went wrong. Try again.",
+  "error_default": "Something went wrong.",
+  "error_unknown_occurred": "Unknown error occurred.",
+  "error_bad_request": "Bad request",
+"error_unauthorized": "Unauthorized access",
+"error_forbidden": "Forbidden",
+"error_not_found": "Resource not found",
+"error_server": "Internal server error"}

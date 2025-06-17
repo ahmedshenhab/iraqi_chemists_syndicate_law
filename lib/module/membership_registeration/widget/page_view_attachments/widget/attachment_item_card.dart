@@ -17,16 +17,13 @@ class AttachmentItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Extract properties from attachment object
-
     final bool isVisibleOptional = attachment['isVisibleOptional'];
 
     Widget displayImage;
     String displayText;
 
     if (file != null) {
-      final String extension = file!.path.split('.').last.toLowerCase();
-      final isPdf = extension == 'pdf';
+      final isPdf = file!.path.split('.').last.toLowerCase() == 'pdf';
 
       displayImage = isPdf
           ? Icon(Icons.picture_as_pdf, size: 48.w, color: AppColor.red)
@@ -43,16 +40,14 @@ class AttachmentItemCard extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             );
-
-      displayText = file!.path.split('/').last;
     } else {
       displayImage = Image.asset(
         'assets/image/png/personalcard.png',
         width: 48.w,
         height: 48.h,
       );
-      displayText = attachment['title'];
     }
+    displayText = attachment['title'];
 
     return Container(
       decoration: BoxDecoration(
@@ -63,13 +58,13 @@ class AttachmentItemCard extends StatelessWidget {
         image: displayImage,
         text: Text(
           displayText,
-          style: AppTextStyle.regular10.copyWith(
+          style: AppTextStyle.regular12.copyWith(
             color: AppColor.primary,
             decoration: TextDecoration.underline,
           ),
           textAlign: TextAlign.center,
         ),
-        heightBetweenImageAndText: 6.h,
+        heightBetweenImageAndText: 0.h,
         isVisibleExtension: true,
         isVisibleOptional: isVisibleOptional,
       ),

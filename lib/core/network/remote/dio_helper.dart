@@ -1,7 +1,5 @@
 // ignore_for_file: avoid_redundant_argument_values
 
-
-
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:iraqi_chemists_syndicate_law/core/app_constant.dart';
@@ -26,7 +24,6 @@ class DioHelper {
             receiveTimeout: const Duration(seconds: 30),
             headers: {
               'Accept-Language': 'ar',
-              'Content-Type': 'application/json',
 
               'Authorization':
                   'Bearer ${CachHelper.getData(key: AppConstant.tokenKey)}',
@@ -35,16 +32,11 @@ class DioHelper {
             baseUrl: ApiEndpoint.baseUrl,
           ),
         );
-          _dio?.interceptors.add(getIt<AppInterceptor>());
-          
-          if (kDebugMode) {
-             _dio?.interceptors.add(getIt<LoggerInterceptor>());
+        _dio?.interceptors.add(getIt<AppInterceptor>());
 
-            
-          }
-          
-            
-      
+        if (kDebugMode) {
+          _dio?.interceptors.add(getIt<LoggerInterceptor>());
+        }
 
         return _dio!;
       }
@@ -53,7 +45,3 @@ class DioHelper {
     }
   }
 }
-
-
-
-

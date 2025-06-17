@@ -26,47 +26,51 @@ class _PageViewGraduationInfoState extends State<PageViewGraduationInfo> {
     return Column(
       children: [
         const GraduationInfoForm(),
+
         Padding(
           padding: EdgeInsetsDirectional.only(bottom: 10.h, top: 12.h),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              CustomElevatedIconButton(
-                side: const BorderSide(color: AppColor.primary),
-                backgroundColor: AppColor.white,
-                onPressed: () {
-                  cubit.previousPage();
-                },
-
-                icon: SvgPicture.asset(
-                  'assets/image/svg/skip_previous.svg',
-                  width: 22.w,
+              Expanded(
+                child: CustomElevatedIconButton(
+                  onPressed: () async {
+                    Navigator.pop(context);
+                  },
+                  backgroundColor: AppColor.white,
+                  side: const BorderSide(color: AppColor.primary),
+                  icon: SvgPicture.asset(
+                    'assets/image/svg/skip_previous.svg',
+                    width: 22.w,
+                  ),
+                  label: Text(
+                    'السابق',
+                    style: AppTextStyle.bold14.copyWith(
+                      color: AppColor.primary,
+                    ),
+                  ),
                 ),
-                label: Text(
-                  'السابق',
-                  style: AppTextStyle.bold14.copyWith(color: AppColor.primary),
-                ),
-                width: 164.w,
-                height: 40.h,
               ),
 
-              CustomElevatedIconButton(
-                onPressed: () {
-                  if (cubit.formKeyGraduation.currentState!.validate()) {
-                    cubit.nextPage();
-                  }
-                },
+              SizedBox(width: 30.w),
 
-                icon: SvgPicture.asset(
-                  'assets/image/svg/skip_next.svg',
-                  width: 22.w,
+              Expanded(
+                child: CustomElevatedIconButton(
+                  onPressed: () async {
+                    // Show validation messages if not valid
+                    if (cubit.formKeyGraduation.currentState!.validate()) {
+                      await cubit.nextPage();
+                    }
+                  },
+                  icon: SvgPicture.asset(
+                    'assets/image/svg/skip_next.svg',
+                    width: 22.w,
+                  ),
+                  label: Text(
+                    'التالي',
+                    style: AppTextStyle.bold14.copyWith(color: AppColor.white),
+                  ),
                 ),
-                label: Text(
-                  'التالي',
-                  style: AppTextStyle.bold14.copyWith(color: AppColor.white),
-                ),
-                width: 164.w,
-                height: 40.h,
               ),
             ],
           ),

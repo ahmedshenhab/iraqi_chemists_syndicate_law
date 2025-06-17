@@ -1,1 +1,16 @@
-{}
+{
+  "error_connection": "خطأ في الاتصال. تحقق من اتصال الإنترنت.",
+  "error_connection_timeout": "انتهت مهلة الاتصال بالخادم.",
+  "error_cancelled": "تم إلغاء الطلب إلى الخادم.",
+  "error_receive_timeout": "انتهت مهلة استلام البيانات من الخادم.",
+  "error_unknown": "فشل الاتصال بالخادم بسبب مشكلة في الإنترنت.",
+  "error_send_timeout": "انتهت مهلة إرسال البيانات إلى الخادم.",
+  "error_bad_response": "حدث خطأ ما. حاول مرة أخرى.",
+  "error_default": "حدث خطأ غير متوقع.",
+  "error_unknown_occurred": "حدث خطأ غير معروف.",
+  "error_bad_request": "طلب غير صالح.",
+  "error_unauthorized": "دخول غير مصرح.",
+  "error_forbidden": "تم رفض الوصول.",
+  "error_not_found": "المورد غير موجود.",
+  "error_server": "خطأ في الخادم الداخلي."
+}

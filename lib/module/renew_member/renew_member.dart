@@ -1,6 +1,5 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:iraqi_chemists_syndicate_law/core/reusable/custom_elevated_icon_button.dart';
@@ -8,6 +7,7 @@ import 'package:iraqi_chemists_syndicate_law/core/reusable/reusable.dart';
 import 'package:iraqi_chemists_syndicate_law/core/ui/style/app_color.dart';
 import 'package:iraqi_chemists_syndicate_law/core/ui/style/app_text_style.dart';
 import 'package:iraqi_chemists_syndicate_law/module/renew_member/cubit/renew_member_cubit.dart';
+import 'package:iraqi_chemists_syndicate_law/module/renew_member/widget/renew_listner.dart';
 import 'package:iraqi_chemists_syndicate_law/module/renew_member/widget/renew_member_forms.dart';
 import 'package:iraqi_chemists_syndicate_law/module/renew_member/widget/renew_member_images.dart';
 
@@ -43,59 +43,79 @@ class RenewMember extends StatelessWidget {
                 end: 16.w,
               ),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CustomElevatedIconButton(
-                    padding: EdgeInsetsDirectional.symmetric(horizontal: 10.w),
-                    side: const BorderSide(color: AppColor.primary),
-                    backgroundColor: AppColor.white,
-                    onPressed: () {},
+                  Expanded(
+                    child: CustomElevatedIconButton(
+                      padding: EdgeInsetsDirectional.symmetric(
+                        horizontal: 10.w,
+                      ),
+                      side: const BorderSide(color: AppColor.primary),
+                      backgroundColor: AppColor.white,
+                      onPressed: () {},
 
-                    icon: SvgPicture.asset(
-                      'assets/image/svg/skip_previous.svg',
-                      width: 18.w,
-                    ),
-                    label: Text(
-                      'الرجوع',
-                      style: AppTextStyle.bold14.copyWith(
-                        color: AppColor.primary,
+                      icon: SvgPicture.asset(
+                        'assets/image/svg/skip_previous.svg',
+                        width: 18.w,
+                      ),
+                      label: Text(
+                        'الرجوع',
+                        style: AppTextStyle.bold14.copyWith(
+                          color: AppColor.primary,
+                        ),
                       ),
                     ),
-                    width: 164.w,
-                    height: 40.h,
                   ),
+                  SizedBox(width: 45.w),
 
-                  CustomElevatedIconButton(
-                    padding: EdgeInsetsDirectional.symmetric(horizontal: 10.w),
-                    onPressed: () {
-                      if (cubit.formKey.currentState!.validate()) {
-                        if (cubit.magesteerimage != null) {
-                          log('');
-                        } else {
-                          buildshowToast(
-                            msg: 'يجب اختيار صورة شهاده الماجستير',
-                            color: AppColor.red,
-                          );
-                        }
-                      }
+                  BlocBuilder<RenewMemberCubit, RenewMemberState>(
+                    buildWhen: (previous, current) =>
+                        current is RenewMemberLoading ||
+                        current is RenewMemberError ||
+                        current is RenewMemberSuccess,
+                    builder: (context, state) {
+                      return state is RenewMemberLoading
+                          ? const Expanded(
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                  color: AppColor.primary,
+                                ),
+                              ),
+                            )
+                          : Expanded(
+                              child: CustomElevatedIconButton(
+                                padding: EdgeInsetsDirectional.symmetric(
+                                  horizontal: 10.w,
+                                ),
+                                onPressed: () async {
+                                  if (cubit.formKey.currentState!.validate() &&
+                                      cubit.identityCardImage != null) {
+                                    await cubit.renewMember();
+                                  } else {
+                                    buildshowToast(
+                                      msg: 'من فضلك ادخل جميع البيانات',
+                                      color: AppColor.red,
+                                    );
+                                  }
+                                },
+
+                                icon: SvgPicture.asset(
+                                  'assets/image/svg/money.svg',
+                                  width: 18.w,
+                                ),
+                                label: Text(
+                                  'دفع رسوم التجديد',
+                                  style: AppTextStyle.bold14.copyWith(
+                                    color: AppColor.white,
+                                  ),
+                                ),
+                              ),
+                            );
                     },
-
-                    icon: SvgPicture.asset(
-                      'assets/image/svg/money.svg',
-                      width: 18.w,
-                    ),
-                    label: Text(
-                      'دفع رسوم التجديد',
-                      style: AppTextStyle.bold14.copyWith(
-                        color: AppColor.white,
-                      ),
-                    ),
-                    width: 164.w,
-                    height: 40.h,
                   ),
                 ],
               ),
             ),
+            const RenewListner(),
           ],
         ),
       ),

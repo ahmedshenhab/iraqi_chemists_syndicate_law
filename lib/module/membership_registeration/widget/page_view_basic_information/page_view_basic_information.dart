@@ -18,12 +18,11 @@ class PageViewBasicInformation extends StatefulWidget {
 }
 
 class _PageViewBasicInformationState extends State<PageViewBasicInformation> {
-  AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
-
   @override
   Widget build(BuildContext context) {
+    final cubit = MembershipRegisterationCubit.get(context);
     return Form(
-      autovalidateMode: _autovalidateMode,
+      autovalidateMode: AutovalidateMode.disabled,
       key: MembershipRegisterationCubit.get(context).formKeyBasicInformation,
       child: Column(
         children: [
@@ -53,41 +52,55 @@ class _PageViewBasicInformationState extends State<PageViewBasicInformation> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                CustomElevatedIconButton(
-                  onPressed: () async{
-                    final form = MembershipRegisterationCubit.get(
-                      context,
-                    ).formKeyBasicInformation.currentState!;
+                Expanded(
+                  child: CustomElevatedIconButton(
+                    onPressed: () async {
+                      Navigator.pop(context);
+                    },
+                    backgroundColor: AppColor.white,
+                    side: const BorderSide(color: AppColor.primary),
+                    icon: SvgPicture.asset(
+                      'assets/image/svg/skip_previous.svg',
+                      width: 22.w,
+                    ),
+                    label: Text(
+                      'السابق',
+                      style: AppTextStyle.bold14.copyWith(
+                        color: AppColor.primary,
+                      ),
+                    ),
+                  ),
+                ),
 
-                    // Show validation messages if not valid
-                    if (!form.validate()) {
-                      setState(() {
-                        _autovalidateMode = AutovalidateMode.onUserInteraction;
-                      });
-                    } else {
-                      if (MembershipRegisterationCubit.get(
-                            context,
-                          ).personalImage ==
-                          null) {
+                SizedBox(width: 30.w),
+
+                Expanded(
+                  child: CustomElevatedIconButton(
+                    onPressed: () async {
+                      // Show validation messages if not valid
+                      if (!(cubit.formKeyBasicInformation.currentState!
+                              .validate()) ||
+                          (cubit.personalImage == null)) {
                         buildshowToast(
-                          msg: 'يجب تحميل صورة شخصية',
+                          msg: 'من فضلك ادخل جميع البيانات',
                           color: AppColor.red,
                         );
-                      } else {
-                      await  MembershipRegisterationCubit.get(context).nextPage();
+                        return;
                       }
-                    }
-                  },
-                  icon: SvgPicture.asset(
-                    'assets/image/svg/skip_next.svg',
-                    width: 22.w,
+
+                      await cubit.nextPage();
+                    },
+                    icon: SvgPicture.asset(
+                      'assets/image/svg/skip_next.svg',
+                      width: 22.w,
+                    ),
+                    label: Text(
+                      'التالي',
+                      style: AppTextStyle.bold14.copyWith(
+                        color: AppColor.white,
+                      ),
+                    ),
                   ),
-                  label: Text(
-                    'التالي',
-                    style: AppTextStyle.bold14.copyWith(color: AppColor.white),
-                  ),
-                  width: 164.w,
-                  height: 40.h,
                 ),
               ],
             ),

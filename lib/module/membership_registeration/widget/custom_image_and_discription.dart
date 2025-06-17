@@ -10,7 +10,8 @@ class CustomImageAndDiscription extends StatelessWidget {
     required this.text,
     required this.heightBetweenImageAndText,
     this.isVisibleExtension = false,
-    this.isVisibleOptional = false, this.extensionStyle,
+    this.isVisibleOptional = false,
+    this.extensionStyle,
   });
   final Widget image;
   final Widget text;
@@ -22,14 +23,14 @@ class CustomImageAndDiscription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        SizedBox(height: 12.h),
         image,
+
         Visibility(
           visible: isVisibleOptional,
           child: Column(
             children: [
-              SizedBox(height: 6.h),
               Text(
                 textAlign: TextAlign.center,
                 maxLines: 1,
@@ -46,13 +47,15 @@ class CustomImageAndDiscription extends StatelessWidget {
           visible: isVisibleExtension,
           child: Column(
             children: [
-              SizedBox(height: 7.h),
+              SizedBox(height: 4.h),
               Text(
                 textAlign: TextAlign.center,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 'الصيغ المسموح بها PDF, PNG & .JPEG',
-                style: extensionStyle?? AppTextStyle.light7.copyWith(color: AppColor.grey),
+                style:
+                    extensionStyle ??
+                    AppTextStyle.light7.copyWith(color: AppColor.grey),
               ),
             ],
           ),

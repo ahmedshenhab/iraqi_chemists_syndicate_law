@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:iraqi_chemists_syndicate_law/core/reusable/custom_drop_down_form_field.dart';
 import 'package:iraqi_chemists_syndicate_law/core/reusable/custom_text_form_field.dart';
 import 'package:iraqi_chemists_syndicate_law/core/ui/style/app_color.dart';
 import 'package:iraqi_chemists_syndicate_law/core/ui/style/app_text_style.dart';
@@ -26,11 +25,11 @@ class RenewMemberForms extends StatelessWidget {
               height: 102.h,
             ),
             SizedBox(height: 15.h),
-            Text('تغيير اللقب', style: AppTextStyle.bold27),
+            Text('تجديد الانتساب', style: AppTextStyle.bold27),
             SizedBox(height: 6.h),
 
             Text(
-              'غير لقبك بخطوة واحدة',
+              'جدد انتسابك بخطوة واحدة',
               style: AppTextStyle.medium15.copyWith(color: AppColor.grey),
             ),
             SizedBox(height: 27.h),
@@ -86,59 +85,6 @@ class RenewMemberForms extends StatelessWidget {
             ),
 
             SizedBox(height: 19.h),
-
-            CustomDropDownFormField(
-              validator: (p0) {
-                if (p0 == null || p0.isEmpty) {
-                  return 'المرتبة مطلوب';
-                }
-                return null;
-              },
-              hintText: 'المرتبة',
-
-              items: ['a', 'b', 'c', 'dd', 'e', 'f', 'g', 'h']
-                  .map(
-                    (e) => DropdownMenuItem(
-                      value: e,
-                      child: Text(e, style: AppTextStyle.regular14),
-                    ),
-                  )
-                  .toList(),
-              onChanged: (value) {},
-              icon: Icon(
-                Icons.arrow_drop_down,
-                color: AppColor.grey,
-                size: 16.h,
-              ),
-            ),
-
-            SizedBox(height: 19.h),
-
-            CustomDropDownFormField(
-              validator: (p0) {
-                if (p0 == null || p0.isEmpty) {
-                  return 'المرتبة المراد استحصالها و عدد سنين الخبرة مطلوب';
-                }
-                return null;
-              },
-              hintText: 'المرتبة المراد استحصالها و عدد سنين الخبرة',
-
-              items: ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
-                  .map(
-                    (e) => DropdownMenuItem(
-                      value: e,
-                      child: Text(e, style: AppTextStyle.regular14),
-                    ),
-                  )
-                  .toList(),
-              onChanged: (value) {},
-
-              icon: Icon(
-                Icons.arrow_drop_down,
-                color: AppColor.grey,
-                size: 16.h,
-              ),
-            ),
           ],
         ),
       ),

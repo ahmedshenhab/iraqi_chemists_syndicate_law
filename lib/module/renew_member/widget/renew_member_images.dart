@@ -23,27 +23,36 @@ class RenewMemberImages extends StatelessWidget {
               cubit.pickFile();
             },
             child: Container(
-              width: 306.w,
-
-              height: 267.h,
+              width: double.infinity,
+              padding: EdgeInsets.symmetric(vertical: 40.h),
               decoration: BoxDecoration(
                 border: Border.all(color: AppColor.seaSerpent),
                 borderRadius: BorderRadius.circular(9.71.r),
               ),
               child: CustomImageAndDiscription(
-                image: cubit.magesteerimage != null
-                    ? Image.file(
-                        cubit.magesteerimage!,
-                        height: 90.h,
-                        width: 90.w,
-                      )
+                image: cubit.identityCardImage != null
+                    ? (cubit.identityCardImage!.path
+                                  .split('.')
+                                  .last
+                                  .toLowerCase() ==
+                              "pdf"
+                          ? Icon(
+                              Icons.picture_as_pdf,
+                              size: 48.w,
+                              color: AppColor.red,
+                            )
+                          : Image.file(
+                              cubit.identityCardImage!,
+                              height: 90.h,
+                              width: 90.w,
+                            ))
                     : SvgPicture.asset(
                         'assets/image/svg/personalcard.svg',
                         height: 90.h,
                         width: 90.w,
                       ),
                 text: Text(
-                  'تحميل صورة شهادة الماجستير',
+                  'تحميل صورة كارنية النقابة',
 
                   style: AppTextStyle.medium15.copyWith(
                     color: AppColor.primary,

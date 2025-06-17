@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:iraqi_chemists_syndicate_law/module/membership_registeration/widget/member_ship_listner.dart';
 import 'package:iraqi_chemists_syndicate_law/module/membership_registeration/widget/page_views.dart';
 
 class MembershipRegisterationScreen extends StatelessWidget {
@@ -13,7 +14,12 @@ class MembershipRegisterationScreen extends StatelessWidget {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
-          child: const PageViews(),
+          child: const Column(
+            children: [
+              Expanded(child: PageViews()),
+              MemberShipListner(),
+            ],
+          ),
         ),
       ),
     );

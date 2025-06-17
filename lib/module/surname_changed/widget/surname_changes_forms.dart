@@ -88,6 +88,7 @@ class SurnameChangesForms extends StatelessWidget {
             SizedBox(height: 19.h),
 
             CustomDropDownFormField(
+
               validator: (p0) {
                 if (p0 == null || p0.isEmpty) {
                   return 'المرتبة مطلوب';
@@ -104,7 +105,9 @@ class SurnameChangesForms extends StatelessWidget {
                     ),
                   )
                   .toList(),
-              onChanged: (value) {},
+              onChanged: (value) {
+                cubit.currenttitle = value;
+              },
               icon: Icon(
                 Icons.arrow_drop_down,
                 color: AppColor.grey,
@@ -131,7 +134,9 @@ class SurnameChangesForms extends StatelessWidget {
                     ),
                   )
                   .toList(),
-              onChanged: (value) {},
+              onChanged: (value) {
+                cubit.newtittle = value;
+              },
 
               icon: Icon(
                 Icons.arrow_drop_down,

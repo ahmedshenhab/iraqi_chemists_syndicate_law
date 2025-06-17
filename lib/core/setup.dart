@@ -1,4 +1,5 @@
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iraqi_chemists_syndicate_law/core/di/di.dart';
 import 'package:iraqi_chemists_syndicate_law/core/observer/observer.dart';
 import 'package:iraqi_chemists_syndicate_law/core/services/shared_prefrence/cach_helper.dart';
+import 'package:iraqi_chemists_syndicate_law/firebase_options.dart';
 
 Future<void> setupApp() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,8 +25,11 @@ Future<void> setupApp() async {
   // );
   
 
+
+
  
   await Future.wait([
+    Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform),
     CachHelper.init,
     ScreenUtil.ensureScreenSize(),
     SystemChrome.setPreferredOrientations([

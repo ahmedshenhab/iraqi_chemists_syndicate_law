@@ -18,7 +18,7 @@ class HommingInformationForm extends StatelessWidget {
         padding: EdgeInsets.only(bottom: 24.h),
         child: Form(
           key: cubit.formKeyHomming,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
+          autovalidateMode: AutovalidateMode.disabled,
           child: Column(
             children: [
               SizedBox(height: 12.h),

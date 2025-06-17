@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iraqi_chemists_syndicate_law/core/reusable/custom_elevated_icon_button.dart';
@@ -6,6 +7,7 @@ import 'package:iraqi_chemists_syndicate_law/core/reusable/reusable.dart';
 import 'package:iraqi_chemists_syndicate_law/core/ui/style/app_color.dart';
 import 'package:iraqi_chemists_syndicate_law/core/ui/style/app_text_style.dart';
 import 'package:iraqi_chemists_syndicate_law/module/membership_registeration/cubit/membership_registeration_cubit.dart';
+import 'package:iraqi_chemists_syndicate_law/module/membership_registeration/cubit/membership_registeration_state.dart';
 import 'package:iraqi_chemists_syndicate_law/module/membership_registeration/widget/page_view_basic_pledge/widget/page_view_pledge_and_register_form.dart';
 
 class PledgeAndRegistration extends StatefulWidget {
@@ -25,54 +27,78 @@ class _PledgeAndRegistrationState extends State<PledgeAndRegistration> {
         Image.asset('assets/image/png/logo.png', width: 80.w, height: 102.h),
         SizedBox(height: 24.h),
         const PageViewPledgeAndRegisterForm(),
+
         Padding(
           padding: EdgeInsetsDirectional.only(bottom: 10.h, top: 12.h),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              CustomElevatedIconButton(
-                side: const BorderSide(color: AppColor.primary),
-                backgroundColor: AppColor.white,
-                onPressed: () {
-                  cubit.previousPage();
-                },
-
-                icon: SvgPicture.asset(
-                  'assets/image/svg/skip_previous.svg',
-                  width: 22.w,
+              Expanded(
+                child: CustomElevatedIconButton(
+                  onPressed: () async {
+                    Navigator.pop(context);
+                  },
+                  backgroundColor: AppColor.white,
+                  side: const BorderSide(color: AppColor.primary),
+                  icon: SvgPicture.asset(
+                    'assets/image/svg/skip_previous.svg',
+                    width: 22.w,
+                  ),
+                  label: Text(
+                    'السابق',
+                    style: AppTextStyle.bold14.copyWith(
+                      color: AppColor.primary,
+                    ),
+                  ),
                 ),
-                label: Text(
-                  'السابق',
-                  style: AppTextStyle.bold14.copyWith(color: AppColor.primary),
-                ),
-                width: 164.w,
-                height: 40.h,
               ),
 
-              CustomElevatedIconButton(
-                onPressed: () {
-                  if ((cubit.isEmployee == null) ||
-                      (cubit.isAgreeToTerms == false) ||
-                      (cubit.isPledgedInfoAccuracy == false)) {
-                    buildshowToast(
-                      msg: 'يرجى ملء جميع الحقول',
-                      color: AppColor.red,
-                    );
-                    return;
-                  }
-                  cubit.nextPage();
-                },
+              SizedBox(width: 30.w),
 
-                icon: SvgPicture.asset(
-                  'assets/image/svg/skip_next.svg',
-                  width: 22.w,
-                ),
-                label: Text(
-                  'التالي',
-                  style: AppTextStyle.bold14.copyWith(color: AppColor.white),
-                ),
-                width: 164.w,
-                height: 40.h,
+              BlocBuilder<
+                MembershipRegisterationCubit,
+                MembershipRegisterationState
+              >(
+                buildWhen: (previous, current) =>
+                    current is MembershipRegisterationLoading ||
+                    current is MembershipRegisterationSuccess ||
+                    current is MembershipRegisterationError,
+                builder: (context, state) {
+                  return state is MembershipRegisterationLoading
+                      ? const Expanded(
+                          child: CircularProgressIndicator(
+                            color: AppColor.primary,
+                          ),
+                        )
+                      : Expanded(
+                          child: CustomElevatedIconButton(
+                            onPressed: () async {
+                              // Show validation messages if not valid
+                              if (cubit.isEmployee == null ||
+                                  cubit.isAgreeToTerms == false ||
+                                  cubit.isPledgedInfoAccuracy == false) {
+                                buildshowToast(
+                                  msg: 'من فضلك وافق على جميع الشروط',
+                                  color: AppColor.red,
+                                );
+                                return;
+                              }
+
+                              await cubit.createMember();
+                            },
+                            icon: SvgPicture.asset(
+                              'assets/image/svg/skip_next.svg',
+                              width: 22.w,
+                            ),
+                            label: Text(
+                              'التالي',
+                              style: AppTextStyle.bold14.copyWith(
+                                color: AppColor.white,
+                              ),
+                            ),
+                          ),
+                        );
+                },
               ),
             ],
           ),

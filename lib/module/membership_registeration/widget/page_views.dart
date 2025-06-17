@@ -16,8 +16,9 @@ class PageViews extends StatelessWidget {
 
     return PageView(
       controller: cubit.pageController,
+      allowImplicitScrolling:  true,
 
-      // physics: const NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       children: const [
         PageViewBasicInformation(),
         PageViewAttatchments(),
