@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -86,8 +84,8 @@ class PageViewAttatchments extends StatelessWidget {
             children: [
               Expanded(
                 child: CustomElevatedIconButton(
-                  onPressed: () async {
-                    Navigator.pop(context);
+                  onPressed: () {
+                    cubit.previousPage();
                   },
                   backgroundColor: AppColor.white,
                   side: const BorderSide(color: AppColor.primary),

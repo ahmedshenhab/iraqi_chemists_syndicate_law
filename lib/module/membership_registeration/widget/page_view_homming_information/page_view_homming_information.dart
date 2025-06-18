@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:iraqi_chemists_syndicate_law/core/reusable/custom_elevated_icon_button.dart';
-import 'package:iraqi_chemists_syndicate_law/core/reusable/reusable.dart';
 import 'package:iraqi_chemists_syndicate_law/core/ui/style/app_color.dart';
 import 'package:iraqi_chemists_syndicate_law/core/ui/style/app_text_style.dart';
 import 'package:iraqi_chemists_syndicate_law/module/membership_registeration/cubit/membership_registeration_cubit.dart';
@@ -26,8 +25,8 @@ class PageViewHommingInformation extends StatelessWidget {
             children: [
               Expanded(
                 child: CustomElevatedIconButton(
-                  onPressed: () async {
-                    Navigator.pop(context);
+                  onPressed: () {
+                    cubit.previousPage();
                   },
                   backgroundColor: AppColor.white,
                   side: const BorderSide(color: AppColor.primary),

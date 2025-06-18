@@ -35,8 +35,8 @@ class _PledgeAndRegistrationState extends State<PledgeAndRegistration> {
             children: [
               Expanded(
                 child: CustomElevatedIconButton(
-                  onPressed: () async {
-                    Navigator.pop(context);
+                  onPressed: ()  {
+                    cubit.previousPage();
                   },
                   backgroundColor: AppColor.white,
                   side: const BorderSide(color: AppColor.primary),
@@ -66,8 +66,10 @@ class _PledgeAndRegistrationState extends State<PledgeAndRegistration> {
                 builder: (context, state) {
                   return state is MembershipRegisterationLoading
                       ? const Expanded(
-                          child: CircularProgressIndicator(
-                            color: AppColor.primary,
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              color: AppColor.primary,
+                            ),
                           ),
                         )
                       : Expanded(

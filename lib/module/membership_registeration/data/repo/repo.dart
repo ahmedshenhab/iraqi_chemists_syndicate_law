@@ -1,3 +1,4 @@
+import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
@@ -11,13 +12,17 @@ class MembershipRegisterationRepo {
   final Dio _dio;
 
   Future<Either<ApiErrorModel, String>> createMember({
-    required MemeberRequestModel memeberRequestModel
-    
+    required MemeberRequestModel memeberRequestModel,
   }) async {
-    final data =await memeberRequestModel.toFormData();
+    final data = await memeberRequestModel.toFormData();
 
     try {
-      await _dio.post(ApiEndpoint.renew, data: data);
+      await _dio.post(
+        ApiEndpoint.creat,
+        data: data,
+        onSendProgress: (count, total) =>
+            log(((count / total) * 100.toInt()).toString()),
+      );
 
       return const Right('تم التسجيل بنجاح');
     } catch (e) {

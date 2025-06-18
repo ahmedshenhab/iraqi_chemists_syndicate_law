@@ -4,6 +4,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:iraqi_chemists_syndicate_law/core/helper_function/compress_file.dart';
 import 'package:iraqi_chemists_syndicate_law/core/network/remote/api_endpoint.dart';
 import 'package:iraqi_chemists_syndicate_law/module/membership_registeration/cubit/membership_registeration_state.dart';
 import 'package:iraqi_chemists_syndicate_law/module/membership_registeration/data/model/memeber_request_model.dart';
@@ -15,7 +16,7 @@ class MembershipRegisterationCubit extends Cubit<MembershipRegisterationState> {
     MembershipRegisterationRepo membershipRegisterationRepo,
   ) : _membershipRegisterationRepo = membershipRegisterationRepo,
       super(MembershipRegisterationCubitInitial()) {
-    pageController = PageController(initialPage: 4);
+    pageController = PageController();
   }
   //privatrepo
 
@@ -58,9 +59,13 @@ class MembershipRegisterationCubit extends Cubit<MembershipRegisterationState> {
       source: ImageSource.gallery,
     );
 
-    personalImage = image != null && image.path.isNotEmpty
-        ? File(image.path)
-        : null;
+    if (image != null && image.path.isNotEmpty) {
+      final File original = File(image.path);
+      final File compressed = await compressFile(original); // ⬅️ compression
+      personalImage = compressed;
+    } else {
+      personalImage = null;
+    }
 
     emit(BasicInformationImages());
   }
@@ -72,7 +77,8 @@ class MembershipRegisterationCubit extends Cubit<MembershipRegisterationState> {
     );
 
     if (result != null && result.files.isNotEmpty) {
-      attachmentFiles[attachmentKey] = File(result.files.first.path!);
+      final original = File(result.files.first.path!);
+      attachmentFiles[attachmentKey] = await compressFile(original);
     } else {
       attachmentFiles[attachmentKey] = null;
     }
@@ -133,12 +139,12 @@ class MembershipRegisterationCubit extends Cubit<MembershipRegisterationState> {
     {
       'key': 'master_certificate',
       'title': 'تحميل صورة شهادة الماجستير',
-      'isVisibleOptional': true,
+      'isVisibleOptional': false,
     },
     {
       'key': 'doctor_certificate',
       'title': 'تحميل صورة شهادة الدكتوراة',
-      'isVisibleOptional': true,
+      'isVisibleOptional': false,
     },
   ];
 

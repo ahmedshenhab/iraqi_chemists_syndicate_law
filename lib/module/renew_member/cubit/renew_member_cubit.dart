@@ -1,6 +1,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iraqi_chemists_syndicate_law/core/helper_function/compress_file.dart';
 import 'dart:io';
 
 import 'package:iraqi_chemists_syndicate_law/module/renew_member/data/repo/repo.dart';
@@ -30,18 +31,22 @@ class RenewMemberCubit extends Cubit<RenewMemberState> {
     });
   }
 
-  Future<void> pickFile() async {
-    final result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['pdf', 'jpg', 'jpeg', 'png'],
-    );
+ Future<void> pickFile() async {
+  final result = await FilePicker.platform.pickFiles(
+    type: FileType.custom,
+    allowedExtensions: ['pdf', 'jpg', 'jpeg', 'png'],
+  );
 
-    identityCardImage = result != null && result.files.isNotEmpty
-        ? File(result.files.first.path!)
-        : null;
-
-    emit(RenewMemberChangeimage());
+  if (result != null && result.files.isNotEmpty) {
+    final file = File(result.files.first.path!);
+    identityCardImage = await compressFile(file); 
+  } else {
+    identityCardImage = null;
   }
+
+  emit(RenewMemberChangeimage());
+}
+
 
   final TextEditingController registrationDateController =
       TextEditingController();

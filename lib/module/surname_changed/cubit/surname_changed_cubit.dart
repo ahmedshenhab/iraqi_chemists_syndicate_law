@@ -1,6 +1,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iraqi_chemists_syndicate_law/core/helper_function/compress_file.dart';
 import 'dart:io';
 
 import 'package:iraqi_chemists_syndicate_law/module/surname_changed/data/repo/repo.dart';
@@ -41,20 +42,21 @@ class SurnameChangedCubit extends Cubit<SurnameChangedState> {
     }
   }
 
-  Future<void> pickFile() async {
-    final result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['pdf', 'jpg', 'jpeg', 'png'],
-    );
+ Future<void> pickFile() async {
+  final result = await FilePicker.platform.pickFiles(
+    type: FileType.custom,
+    allowedExtensions: ['pdf', 'jpg', 'jpeg', 'png'],
+  );
 
-    if (result != null && result.files.isNotEmpty) {
-      experienseCertificateImage = File(result.files.first.path!);
-    } else {
-      experienseCertificateImage = null;
-    }
-
-    emit(SurnameChangeimage());
+  if (result != null && result.files.isNotEmpty) {
+    final pickedFile = File(result.files.first.path!);
+    experienseCertificateImage = await compressFile(pickedFile); 
+  } else {
+    experienseCertificateImage = null;
   }
+
+  emit(SurnameChangeimage());
+}
 
   @override
   Future<void> close() {

@@ -53,7 +53,9 @@ class HommingInformationForm extends StatelessWidget {
                       ),
                     )
                     .toList(),
-                onChanged: (value) {},
+                onChanged: (value) {
+                  cubit.memberGovernerate = value;
+                },
                 icon: const Icon(Icons.arrow_drop_down, color: AppColor.grey),
               ),
 
@@ -74,7 +76,10 @@ class HommingInformationForm extends StatelessWidget {
                       ),
                     )
                     .toList(),
-                onChanged: (value) {},
+                onChanged: (value) {
+                  cubit.memberCity = value;
+
+                },
                 icon: const Icon(Icons.arrow_drop_down, color: AppColor.grey),
               ),
               SizedBox(height: 32.h),
@@ -94,7 +99,9 @@ class HommingInformationForm extends StatelessWidget {
                       ),
                     )
                     .toList(),
-                onChanged: (value) {},
+                onChanged: (value) {
+                  cubit.memberStreet = value;
+                },
                 icon: const Icon(Icons.arrow_drop_down, color: AppColor.grey),
               ),
               SizedBox(height: 32.h),

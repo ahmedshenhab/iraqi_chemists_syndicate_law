@@ -34,8 +34,9 @@ class _PageViewGraduationInfoState extends State<PageViewGraduationInfo> {
             children: [
               Expanded(
                 child: CustomElevatedIconButton(
-                  onPressed: () async {
-                    Navigator.pop(context);
+                  onPressed: ()  {
+                    cubit.previousPage();
+                   
                   },
                   backgroundColor: AppColor.white,
                   side: const BorderSide(color: AppColor.primary),

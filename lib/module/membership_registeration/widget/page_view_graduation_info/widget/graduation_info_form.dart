@@ -17,7 +17,7 @@ class GraduationInfoForm extends StatelessWidget {
         padding: EdgeInsets.only(bottom: 24.h),
         child: Form(
           key: cubit.formKeyGraduation,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
+          autovalidateMode: AutovalidateMode.disabled,
 
           child: Column(
             children: [

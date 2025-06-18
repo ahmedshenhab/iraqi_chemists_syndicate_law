@@ -5,7 +5,7 @@ import 'package:iraqi_chemists_syndicate_law/core/lang/localization_service.dart
 import 'package:iraqi_chemists_syndicate_law/core/routing/router.dart';
 import 'package:iraqi_chemists_syndicate_law/core/ui/theme/app_light_theme.dart';
 import 'package:iraqi_chemists_syndicate_law/generated/l10n.dart';
-import 'package:iraqi_chemists_syndicate_law/module/membership_registeration/membership_registeration_screen.dart';
+import 'package:iraqi_chemists_syndicate_law/module/test.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         ],
         locale: const Locale('ar'),
         supportedLocales: S.delegate.supportedLocales,
-        initialRoute: MembershipRegisterationScreen.routeName,
+        initialRoute: Test.routeName,
 
         builder: (context, child) {
           final localizations = S.of(context);

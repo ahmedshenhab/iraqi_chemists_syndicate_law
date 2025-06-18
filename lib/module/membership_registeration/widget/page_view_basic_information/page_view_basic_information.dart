@@ -54,7 +54,7 @@ class _PageViewBasicInformationState extends State<PageViewBasicInformation> {
               children: [
                 Expanded(
                   child: CustomElevatedIconButton(
-                    onPressed: () async {
+                    onPressed: () {
                       Navigator.pop(context);
                     },
                     backgroundColor: AppColor.white,
