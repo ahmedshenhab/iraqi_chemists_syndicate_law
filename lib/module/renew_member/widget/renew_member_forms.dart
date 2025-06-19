@@ -61,6 +61,7 @@ class RenewMemberForms extends StatelessWidget {
                 if (pickedDate != null) {
                   cubit.registrationDateController.text = DateFormat(
                     'yyyy-MM-dd',
+                    'en',
                   ).format(pickedDate);
                 }
               },

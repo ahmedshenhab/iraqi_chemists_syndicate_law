@@ -62,6 +62,7 @@ class SurnameChangesForms extends StatelessWidget {
                 if (pickedDate != null) {
                   cubit.registrationDateController.text = DateFormat(
                     'yyyy-MM-dd',
+                    'en',
                   ).format(pickedDate);
                 }
               },
@@ -88,7 +89,6 @@ class SurnameChangesForms extends StatelessWidget {
             SizedBox(height: 19.h),
 
             CustomDropDownFormField(
-
               validator: (p0) {
                 if (p0 == null || p0.isEmpty) {
                   return 'المرتبة مطلوب';

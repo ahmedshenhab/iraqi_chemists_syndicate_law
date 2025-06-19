@@ -53,7 +53,9 @@ class GraduationInfoForm extends StatelessWidget {
                       ),
                     )
                     .toList(),
-                onChanged: (value) {},
+                onChanged: (value) {
+                  cubit.graduationType = value!;
+                },
                 icon: const Icon(Icons.arrow_drop_down, color: AppColor.grey),
               ),
               SizedBox(height: 32.h),
@@ -73,7 +75,9 @@ class GraduationInfoForm extends StatelessWidget {
                       ),
                     )
                     .toList(),
-                onChanged: (value) {},
+                onChanged: (value) {
+                  cubit.uneversityName = value!;
+                },
                 icon: const Icon(Icons.arrow_drop_down, color: AppColor.grey),
               ),
               SizedBox(height: 32.h),
@@ -93,7 +97,9 @@ class GraduationInfoForm extends StatelessWidget {
                       ),
                     )
                     .toList(),
-                onChanged: (value) {},
+                onChanged: (value) {
+                  cubit.collegName = value!;
+                },
                 icon: const Icon(Icons.arrow_drop_down, color: AppColor.grey),
               ),
 
@@ -114,7 +120,9 @@ class GraduationInfoForm extends StatelessWidget {
                       ),
                     )
                     .toList(),
-                onChanged: (value) {},
+                onChanged: (value) {
+                  cubit.graduationYear = value!;
+                },
                 icon: const Icon(Icons.arrow_drop_down, color: AppColor.grey),
               ),
               SizedBox(height: 32.h),

@@ -24,9 +24,6 @@ class MembershipRegisterationCubit extends Cubit<MembershipRegisterationState> {
 
   Future<void> createMember() async {
     final createMemberRequestModel = MemeberRequestModel(
-      status: 'painding',
-      userId: '${JwtDecoder.decode(ApiEndpoint.token)[ApiEndpoint.userId]}',
-
       memberNameArabic: arabicFullNameController.text,
       memberNameEnglish: englishFullNameController.text,
       memberEmail: emailController.text,
@@ -41,6 +38,13 @@ class MembershipRegisterationCubit extends Cubit<MembershipRegisterationState> {
       memberPHDCertificate: attachmentFiles['doctor_certificate']!,
       memberBSCCertificate: attachmentFiles['graduation_certificate']!,
       memberMasterCertificate: attachmentFiles['master_certificate']!,
+      buildingLicence: attachmentFiles['image_homming_card']!,
+      nationalIdImage: attachmentFiles['image_identity_card']!,
+      scientificDegree: graduationType!,
+
+      collegName:  collegName!,
+      graduationYear:  graduationYear!,
+      universityName:  uneversityName!,
     );
 
     emit(MembershipRegisterationLoading());
@@ -166,11 +170,15 @@ class MembershipRegisterationCubit extends Cubit<MembershipRegisterationState> {
   String? memberGovernerate;
   String? memberCity;
   String? memberStreet;
+  String? collegName;
+  String? uneversityName;
+  String? graduationYear;
   final zokakController = TextEditingController();
   final homeController = TextEditingController();
   bool? isEmployee;
   bool? isAgreeToTerms = false;
   bool? isPledgedInfoAccuracy = false;
+  String?graduationType;
 
   @override
   Future<void> close() {

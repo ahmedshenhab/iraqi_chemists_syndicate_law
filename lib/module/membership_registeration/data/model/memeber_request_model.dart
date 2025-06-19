@@ -2,9 +2,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 
 class MemeberRequestModel {
-  MemeberRequestModel(
-   {required this.userId,
-    required this.status,
+  MemeberRequestModel({
     required this.memberNameArabic,
     required this.memberNameEnglish,
     required this.memberEmail,
@@ -19,6 +17,12 @@ class MemeberRequestModel {
     required this.memberPHDCertificate,
     required this.memberBSCCertificate,
     required this.memberMasterCertificate,
+    required this.buildingLicence,
+    required this.nationalIdImage,
+    required this.scientificDegree,
+    required this.universityName,
+    required this.collegName,
+    required this.graduationYear,
   });
   final String memberNameArabic;
   final String memberNameEnglish;
@@ -34,8 +38,13 @@ class MemeberRequestModel {
   final File memberPHDCertificate;
   final File memberBSCCertificate;
   final File memberMasterCertificate;
-  final String userId;
-  final String status;
+  final File buildingLicence;
+  final File nationalIdImage;
+
+  final String scientificDegree;
+  final String universityName;
+  final String collegName;
+  final String graduationYear;
 
   Future<FormData> toFormData() async {
     return FormData.fromMap({
@@ -65,8 +74,19 @@ class MemeberRequestModel {
         memberMasterCertificate.path,
         filename: memberMasterCertificate.path.split('/').last,
       ),
-      'UserId': userId,
-      'Status': status,
+
+      'BuildingLicence': await MultipartFile.fromFile(
+        buildingLicence.path,
+        filename: buildingLicence.path.split('/').last,
+      ),
+      'NationalIdImage': await MultipartFile.fromFile(
+        nationalIdImage.path,
+        filename: nationalIdImage.path.split('/').last,
+      ),
+      'scientificDegree': scientificDegree,
+      'UniversityName': universityName,
+      'CollegName': collegName,
+      'GraduationYear': graduationYear,
     });
   }
 }
